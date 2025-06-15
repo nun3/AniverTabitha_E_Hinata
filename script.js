@@ -12,21 +12,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const balloonsPoppedCountTextEl = document.getElementById('balloonsPoppedCountText');
     const balloonsTargetCountTextEl = document.getElementById('balloonsTargetCountText');
     const balloonGameFeedbackEl = document.getElementById('balloonGameFeedback');
+    const balloonGameProgress = document.getElementById('balloonGameProgress');
+    const escudosColetados = document.getElementById('escudosColetados');
 
     // --- Configurações do Jogo ---
     const config = {
-        totalStars: 5,
-        starColors: ['#FFD700', '#FFA500', '#FFE5B4'],
-        starSize: { min: 40, max: 60 },
-        starSpeed: { min: 3000, max: 5000 },
-        maxActiveStars: 3,
-        starCreationInterval: 2000
+        totalEscudos: 5,
+        escudoSize: { min: 60, max: 80 },
+        escudoSpeed: { min: 3000, max: 5000 },
+        maxActiveEscudos: 3,
+        escudoCreationInterval: 2000
     };
 
-    let balloonsPopped = 0;
-    const targetBalloons = 5;
-    let starCreationInterval = null;
+    let escudosColetadosCount = 0;
     let gameActive = false;
+    let escudoCreationInterval = null;
 
     // Criar elemento de transição mágica
     const magicTransition = document.createElement('div');
@@ -36,11 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Inicialização do Jogo ---
     function initGame() {
         try {
-            const gameSection = document.getElementById('balloonGameSection');
-            const feedback = document.getElementById('balloonGameFeedback');
-            const progress = document.getElementById('balloonGameProgress');
-            
-            if (!gameSection || !feedback || !progress) {
+            if (!balloonGameSection || !balloonGameFeedbackEl || !balloonGameProgress) {
                 throw new Error('Elementos do jogo não encontrados');
             }
 
@@ -48,18 +44,18 @@ document.addEventListener('DOMContentLoaded', function() {
             cleanup();
             
             // Resetar contadores
-            balloonsPopped = 0;
+            escudosColetadosCount = 0;
             gameActive = true;
             
             // Atualizar interface
-            feedback.textContent = 'Ajude a Mulher Maravilha a coletar seus escudos!';
-            progress.textContent = `Escudos coletados: ${balloonsPopped}/${targetBalloons}`;
+            balloonGameFeedbackEl.textContent = 'Ajude a Mulher Maravilha a coletar seus escudos!';
+            escudosColetados.textContent = '0';
             
             // Iniciar criação de escudos
-            starCreationInterval = setInterval(createStar, 2000);
+            escudoCreationInterval = setInterval(createEscudo, config.escudoCreationInterval);
             
             // Adicionar evento de clique na área do jogo
-            gameSection.addEventListener('click', handleGameAreaClick);
+            balloonGameSection.addEventListener('click', handleGameAreaClick);
             
             console.log('Jogo iniciado com sucesso');
         } catch (error) {
@@ -68,37 +64,38 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Criar escudo
-    function createStar() {
+    function createEscudo() {
         try {
             if (!gameActive) return;
 
-            const shield = document.createElement('div');
-            shield.className = 'shield';
+            const escudo = document.createElement('div');
+            escudo.className = 'shield';
             
-            // Tamanho aleatório entre 40 e 80 pixels
-            const size = Math.random() * 40 + 40;
-            shield.style.width = `${size}px`;
-            shield.style.height = `${size}px`;
+            // Tamanho aleatório
+            const size = Math.random() * (config.escudoSize.max - config.escudoSize.min) + config.escudoSize.min;
+            escudo.style.width = `${size}px`;
+            escudo.style.height = `${size}px`;
             
-            // Posição aleatória
-            const maxX = window.innerWidth - size;
-            const maxY = window.innerHeight - size;
-            shield.style.left = `${Math.random() * maxX}px`;
-            shield.style.top = `${Math.random() * maxY}px`;
+            // Posição aleatória dentro da área do jogo
+            const gameRect = balloonGameSection.getBoundingClientRect();
+            const maxX = gameRect.width - size;
+            const maxY = gameRect.height - size;
+            escudo.style.left = `${Math.random() * maxX}px`;
+            escudo.style.top = `${Math.random() * maxY}px`;
             
             // Adicionar ao DOM
-            document.body.appendChild(shield);
+            balloonGameSection.appendChild(escudo);
             
             // Adicionar evento de clique
-            shield.addEventListener('click', (e) => {
+            escudo.addEventListener('click', (e) => {
                 e.stopPropagation();
-                collectStar(shield);
+                collectEscudo(escudo);
             });
             
             // Remover após 5 segundos se não for coletado
             setTimeout(() => {
-                if (shield.parentNode) {
-                    removeStar(shield);
+                if (escudo.parentNode) {
+                    removeEscudo(escudo);
                 }
             }, 5000);
             
@@ -109,13 +106,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Coletar escudo
-    function collectStar(shield) {
+    function collectEscudo(escudo) {
         try {
             if (!gameActive) return;
 
             // Efeito de coleta
-            shield.style.transform = 'scale(1.5) rotate(180deg)';
-            shield.style.opacity = '0';
+            escudo.classList.add('collected');
             
             // Som de coleta
             const collectSound = new Audio('./escudo.mp3');
@@ -123,24 +119,22 @@ document.addEventListener('DOMContentLoaded', function() {
             collectSound.play().catch(error => console.log('Erro ao tocar som:', error));
             
             // Atualizar contador
-            balloonsPopped++;
-            document.getElementById('balloonGameProgress').textContent = 
-                `Escudos coletados: ${balloonsPopped}/${targetBalloons}`;
+            escudosColetadosCount++;
+            escudosColetados.textContent = escudosColetadosCount;
             
             // Feedback visual
-            const feedback = document.getElementById('balloonGameFeedback');
-            feedback.textContent = 'Escudo coletado! ✨';
-            feedback.style.color = '#FFD700';
+            balloonGameFeedbackEl.textContent = 'Escudo coletado! ✨';
+            balloonGameFeedbackEl.style.color = '#FFD700';
             
             // Remover escudo após animação
             setTimeout(() => {
-                if (shield.parentNode) {
-                    shield.parentNode.removeChild(shield);
+                if (escudo.parentNode) {
+                    escudo.parentNode.removeChild(escudo);
                 }
-            }, 300);
+            }, 500);
             
             // Verificar vitória
-            if (balloonsPopped >= targetBalloons) {
+            if (escudosColetadosCount >= config.totalEscudos) {
                 showVictory();
             }
             
@@ -151,15 +145,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Remover escudo
-    function removeStar(shield) {
+    function removeEscudo(escudo) {
         try {
-            if (shield.parentNode) {
-                shield.style.opacity = '0';
-                shield.style.transform = 'scale(0.5) rotate(-180deg)';
+            if (escudo.parentNode) {
+                escudo.style.opacity = '0';
+                escudo.style.transform = 'scale(0.5) rotate(-180deg)';
                 
                 setTimeout(() => {
-                    if (shield.parentNode) {
-                        shield.parentNode.removeChild(shield);
+                    if (escudo.parentNode) {
+                        escudo.parentNode.removeChild(escudo);
                     }
                 }, 300);
             }
@@ -172,56 +166,31 @@ document.addEventListener('DOMContentLoaded', function() {
     function showVictory() {
         try {
             gameActive = false;
-            clearInterval(starCreationInterval);
+            clearInterval(escudoCreationInterval);
             
             // Feedback de vitória
-            const feedback = document.getElementById('balloonGameFeedback');
-            feedback.textContent = 'Parabéns! Você coletou todos os escudos! 🎉';
-            feedback.style.color = '#FFD700';
+            balloonGameFeedbackEl.textContent = 'Parabéns! Você coletou todos os escudos! 🎉';
+            balloonGameFeedbackEl.style.color = '#FFD700';
             
             // Criar efeito de confete
             createConfetti();
             
-            // Ativar transição mágica
-            const magicTransition = document.getElementById('magicTransition');
-            if (magicTransition) {
-                magicTransition.classList.add('active');
-                
-                // Criar partículas mágicas no centro da tela
-                const centerX = window.innerWidth / 2;
-                const centerY = window.innerHeight / 2;
-                createMagicParticles(centerX, centerY, 30);
-                
-                // Som mágico
-                const magicSound = new Audio('./chicote.mp3');
-                magicSound.volume = 0.3;
-                magicSound.play().catch(error => console.log('Erro ao tocar som mágico:', error));
-            }
-            
             // Mostrar a área de detalhes da festa
-            const detalhesFesta = document.getElementById('detalhesFesta');
-            const gameSection = document.getElementById('balloonGameSection');
-            
-            if (detalhesFesta && gameSection) {
+            if (detalhesFesta) {
                 // Esconder a área do jogo com efeito
-                gameSection.style.opacity = '0';
-                gameSection.style.transform = 'translateY(-20px) scale(0.9)';
-                gameSection.style.filter = 'blur(5px)';
+                balloonGameSection.style.opacity = '0';
+                balloonGameSection.style.transform = 'translateY(-20px) scale(0.9)';
                 
                 setTimeout(() => {
-                    gameSection.style.display = 'none';
+                    balloonGameSection.style.display = 'none';
                     
                     // Mostrar detalhes da festa com efeito mágico
                     detalhesFesta.classList.remove('hidden');
                     detalhesFesta.classList.add('visible');
-                    detalhesFesta.style.display = 'block';
-                    
-                    // Criar mais partículas mágicas
-                    createMagicParticles(centerX, centerY, 20);
                 }, 500);
             }
             
-            console.log('Vitória alcançada e detalhes da festa revelados com efeitos mágicos');
+            console.log('Vitória alcançada');
         } catch (error) {
             console.error('Erro ao mostrar vitória:', error);
         }
@@ -238,7 +207,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 confetti.style.backgroundColor = ['#FFD700', '#FF0000', '#0000FF'][Math.floor(Math.random() * 3)];
                 document.body.appendChild(confetti);
                 
-                // Remover após animação
                 setTimeout(() => {
                     if (confetti.parentNode) {
                         confetti.parentNode.removeChild(confetti);
@@ -250,27 +218,51 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Limpar recursos
+    // Limpar estado do jogo
     function cleanup() {
         try {
-            clearInterval(starCreationInterval);
-            const shields = document.querySelectorAll('.shield');
-            shields.forEach(shield => {
-                if (shield.parentNode) {
-                    shield.parentNode.removeChild(shield);
+            // Remover todos os escudos existentes
+            const escudos = document.querySelectorAll('.shield');
+            escudos.forEach(escudo => {
+                if (escudo.parentNode) {
+                    escudo.parentNode.removeChild(escudo);
                 }
             });
+            
+            // Limpar intervalo
+            if (escudoCreationInterval) {
+                clearInterval(escudoCreationInterval);
+            }
+            
+            // Resetar estado
+            gameActive = false;
+            escudosColetadosCount = 0;
+            
+            console.log('Estado do jogo limpo');
         } catch (error) {
-            console.error('Erro ao limpar recursos:', error);
+            console.error('Erro ao limpar estado do jogo:', error);
         }
     }
 
-    // Manipulador de clique na área do jogo
+    // Manipular clique na área do jogo
     function handleGameAreaClick(e) {
-        if (e.target.id === 'balloonGameSection') {
-            const feedback = document.getElementById('balloonGameFeedback');
-            feedback.textContent = 'Tente clicar nos escudos! 🛡️';
-            feedback.style.color = '#FFD700';
+        try {
+            if (!gameActive) return;
+            
+            // Feedback visual do clique
+            const clickEffect = document.createElement('div');
+            clickEffect.className = 'click-effect';
+            clickEffect.style.left = e.clientX + 'px';
+            clickEffect.style.top = e.clientY + 'px';
+            document.body.appendChild(clickEffect);
+            
+            setTimeout(() => {
+                if (clickEffect.parentNode) {
+                    clickEffect.parentNode.removeChild(clickEffect);
+                }
+            }, 500);
+        } catch (error) {
+            console.error('Erro ao manipular clique:', error);
         }
     }
 

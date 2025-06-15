@@ -14,21 +14,30 @@
     <div class="container">
         <!-- Imagem Central do Convite -->
         <div class="imagem-container">
-            <img id="imagemCentral" src="./tabithahinata.png" alt="Mulher Maravilha" class="convite-imagem-principal">
+            <img 
+                id="imagemCentral" 
+                src="./tabithahinata.png" 
+                alt="Mulher Maravilha" 
+                class="convite-imagem-principal"
+                width="400"
+                height="400"
+                loading="eager"
+                fetchpriority="high"
+            >
         </div>
 
         <div id="balloonGameSection">
             <h2>Hora da Aventura!</h2>
             <p>Ajude a Mulher Maravilha a coletar seus escudos dourados! 🛡️</p>
             <div id="balloonGameProgress" class="game-progress">
-                Escudos coletados: 0/5
+                Escudos coletados: <span id="escudosColetados">0</span>/5
             </div>
             <div id="balloonGameFeedback">
                 Clique nos escudos para coletá-los! ✨
             </div>
         </div>
         
-        <!-- Área de Detalhes da Festa (inicialmente oculta) -->
+        <!-- Área de Detalhes da Festa -->
         <div id="detalhesFesta" class="hidden">
             <h2>Parabéns! Você desbloqueou a festa!</h2>
             
