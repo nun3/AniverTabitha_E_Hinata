@@ -47,7 +47,17 @@
                     <h2>Oba! A Mulher Maravilha tem um recado!</h2>
                     <p>Clique no símbolo dela para ver a mensagem mágica!</p>
                     <div class="presente-container">
-                        <img id="imagemDoPresente" src="./presente.png" alt="Símbolo da Mulher Maravilha" loading="lazy">
+                        <img 
+                            id="imagemDoPresente" 
+                            src="./presente.png" 
+                            alt="Símbolo da Mulher Maravilha" 
+                            width="150" 
+                            height="150"
+                            fetchpriority="high"
+                            decoding="async"
+                            onload="this.style.opacity='1'"
+                            style="opacity: 0; transition: opacity 0.3s ease-in-out;"
+                        >
                     </div>
                 </div>
 
