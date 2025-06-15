@@ -72,6 +72,7 @@ body::before {
     box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
     border: 2px solid var(--wonder-gold);
     overflow: visible;
+    width: min(95%, 1200px);
 }
 
 /* Imagem Central do Convite */
@@ -415,16 +416,45 @@ h3 {
 /* Responsividade */
 @media (max-width: 768px) {
     .container {
-        padding: 15px;
+        padding: 1rem;
+        margin: 0.5rem;
+        width: 95%;
     }
 
-    h1 {
-        font-size: 2em;
-        margin-bottom: 15px;
+    #imagemCentral {
+        max-width: 100%;
+        margin: 1rem auto;
     }
 
     h2 {
-        font-size: 1.5em;
+        font-size: 1.5rem;
+        margin: 1rem 0;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+    }
+
+    .whatsapp-button {
+        padding: 12px 24px;
+        font-size: 1rem;
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .evento-info {
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: 1rem;
+    }
+
+    #surpresaVideo {
+        width: 100%;
+        height: auto;
     }
 
     p {
@@ -465,13 +495,6 @@ h3 {
         font-size: 1.5em;
     }
 
-    .whatsapp-button {
-        padding: 12px 25px;
-        font-size: 1.1em;
-        width: 90%;
-        max-width: 300px;
-    }
-
     .detalhes {
         padding: 15px;
     }
@@ -486,21 +509,40 @@ h3 {
 }
 
 @media (max-width: 480px) {
-    h1 {
-        font-size: 1.8em;
+    body {
+        padding: 5px;
+    }
+
+    .container {
+        padding: 0.5rem;
+        margin: 0.25rem;
     }
 
     h2 {
-        font-size: 1.3em;
+        font-size: 1.3rem;
     }
 
-    p {
+    h3 {
+        font-size: 1.1rem;
+    }
+
+    .whatsapp-button {
+        padding: 10px 20px;
         font-size: 0.9rem;
     }
 
+    .evento-info p {
+        font-size: 0.9rem;
+        margin: 0.5rem 0;
+    }
+
+    #areaPresente {
+        padding: 0.5rem;
+    }
+
     #imagemDoPresente {
-        width: 100px;
-        height: 100px;
+        width: 80%;
+        max-width: 200px;
     }
 
     #videoContainer {
@@ -511,13 +553,35 @@ h3 {
         max-height: 60vh;
     }
 
-    .whatsapp-button {
-        padding: 10px 20px;
-        font-size: 1em;
-    }
-
     .detalhes {
         padding: 10px;
+    }
+}
+
+@media (max-height: 600px) and (orientation: landscape) {
+    .container {
+        padding: 0.5rem;
+    }
+
+    #imagemCentral {
+        max-width: 40%;
+        margin: 0.5rem auto;
+    }
+
+    .evento-info {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .evento-info p {
+        margin: 0.25rem 0;
+    }
+
+    .whatsapp-button {
+        padding: 8px 16px;
+        font-size: 0.9rem;
     }
 }
 
@@ -1182,6 +1246,9 @@ h3 {
     border: 2px solid var(--wonder-gold);
     transform: scale(0.9);
     transition: transform 0.3s ease;
+    width: min(95%, 800px);
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .modal.visible .modal-content {
@@ -1224,8 +1291,8 @@ h3 {
 /* Ícones Flutuantes */
 .floating-icon {
     position: fixed;
-    width: 100px;
-    height: 100px;
+    width: clamp(30px, 5vw, 50px);
+    height: auto;
     z-index: 100;
     pointer-events: none;
     opacity: 0.8;
