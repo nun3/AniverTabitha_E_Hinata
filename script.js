@@ -14,6 +14,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const balloonGameFeedbackEl = document.getElementById('balloonGameFeedback');
     const balloonGameProgress = document.getElementById('balloonGameProgress');
     const escudosColetados = document.getElementById('escudosColetados');
+    const startGameBtn = document.getElementById('startGameBtn');
+    const playAgainBtn = document.getElementById('playAgainBtn');
+    const gameTimer = document.getElementById('gameTimer');
+    const gameScore = document.getElementById('gameScore');
+    const finalTime = document.getElementById('finalTime');
 
     // --- Configurações do Jogo ---
     const config = {
@@ -27,6 +32,9 @@ document.addEventListener('DOMContentLoaded', function() {
     let escudosColetadosCount = 0;
     let gameActive = false;
     let escudoCreationInterval = null;
+    let gameStartTime = 0;
+    let gameTimerInterval = null;
+    let bestTime = localStorage.getItem('bestTime') || Infinity;
 
     // Criar elemento de transição mágica
     const magicTransition = document.createElement('div');
@@ -46,13 +54,22 @@ document.addEventListener('DOMContentLoaded', function() {
             // Resetar contadores
             escudosColetadosCount = 0;
             gameActive = true;
+            gameStartTime = Date.now();
             
             // Atualizar interface
-            balloonGameFeedbackEl.textContent = 'Ajude a Mulher Maravilha a coletar seus escudos!';
+            balloonGameFeedbackEl.textContent = 'Encontre os escudos! ✨';
             escudosColetados.textContent = '0';
+            gameTimer.textContent = 'Tempo: 0s';
+            gameScore.classList.add('hidden');
+            
+            // Iniciar timer
+            startTimer();
             
             // Iniciar criação de escudos
             escudoCreationInterval = setInterval(createEscudo, config.escudoCreationInterval);
+            
+            // Esconder botão de iniciar
+            startGameBtn.style.display = 'none';
             
             // Adicionar evento de clique na área do jogo
             balloonGameSection.addEventListener('click', handleGameAreaClick);
@@ -78,13 +95,13 @@ document.addEventListener('DOMContentLoaded', function() {
             let shieldSize;
             
             if (screenWidth <= 320) {
-                shieldSize = 45; // Tamanho maior para telas pequenas
+                shieldSize = 45;
             } else if (screenWidth <= 480) {
                 shieldSize = 50;
             } else if (screenWidth <= 768) {
                 shieldSize = 55;
             } else {
-                shieldSize = 60; // Tamanho maior para telas grandes
+                shieldSize = 60;
             }
             
             escudo.style.width = `${shieldSize}px`;
@@ -95,8 +112,8 @@ document.addEventListener('DOMContentLoaded', function() {
             escudo.style.left = `${startX}px`;
             escudo.style.top = '-100px';
             
-            // Velocidade reduzida e mais consistente
-            const speed = 1 + Math.random() * 1.5; // Velocidade mais lenta
+            // Velocidade e direção
+            const speed = 1 + Math.random() * 1.5;
             const direction = Math.random() > 0.5 ? 1 : -1;
             
             document.body.appendChild(escudo);
@@ -110,13 +127,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 
                 posY += speed;
-                // Movimento mais suave
                 const posX = startX + Math.sin(posY * 0.01) * 30 * direction;
                 
                 escudo.style.top = `${posY}px`;
                 escudo.style.left = `${posX}px`;
                 
-                // Remove se sair da tela
                 if (posY > window.innerHeight) {
                     escudo.remove();
                 } else {
@@ -124,10 +139,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             };
             
-            // Inicia a animação
             requestAnimationFrame(animate);
             
-            // Adiciona evento de clique/toque
+            // Adiciona eventos de interação
             escudo.addEventListener('click', handleEscudoClick);
             escudo.addEventListener('touchstart', handleEscudoClick, { passive: true });
             
@@ -136,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Função separada para lidar com o clique/toque no escudo
+    // Função para lidar com o clique no escudo
     function handleEscudoClick(event) {
         try {
             if (!gameActive) return;
@@ -158,6 +172,10 @@ document.addEventListener('DOMContentLoaded', function() {
             escudosColetadosCount++;
             escudosColetados.textContent = escudosColetadosCount;
             
+            // Feedback visual
+            balloonGameFeedbackEl.textContent = 'Escudo coletado! ✨';
+            balloonGameFeedbackEl.style.color = '#FFD700';
+            
             // Verifica vitória
             if (escudosColetadosCount >= config.totalEscudos) {
                 showVictory();
@@ -167,77 +185,30 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Coletar escudo
-    function collectEscudo(escudo) {
-        try {
-            if (!gameActive) return;
-
-            // Efeito de coleta
-            escudo.classList.add('collected');
-            
-            // Som de coleta
-            const collectSound = new Audio('./escudo.mp3');
-            collectSound.volume = 0.3;
-            collectSound.play().catch(error => console.log('Erro ao tocar som:', error));
-            
-            // Atualizar contador
-            escudosColetadosCount++;
-            escudosColetados.textContent = escudosColetadosCount;
-            
-            // Feedback visual
-            balloonGameFeedbackEl.textContent = 'Escudo coletado! ✨';
-            balloonGameFeedbackEl.style.color = '#FFD700';
-            
-            // Remover escudo após animação
-            setTimeout(() => {
-                if (escudo.parentNode) {
-                    escudo.parentNode.removeChild(escudo);
-                }
-            }, 500);
-            
-            // Verificar vitória
-            if (escudosColetadosCount >= config.totalEscudos) {
-                showVictory();
-            }
-            
-            console.log('Escudo coletado');
-        } catch (error) {
-            console.error('Erro ao coletar escudo:', error);
-        }
-    }
-
-    // Remover escudo
-    function removeEscudo(escudo) {
-        try {
-            if (escudo.parentNode) {
-                escudo.style.opacity = '0';
-                escudo.style.transform = 'scale(0.5) rotate(-180deg)';
-                
-                setTimeout(() => {
-                    if (escudo.parentNode) {
-                        escudo.parentNode.removeChild(escudo);
-                    }
-                }, 300);
-            }
-        } catch (error) {
-            console.error('Erro ao remover escudo:', error);
-        }
-    }
-
-    // Mostrar vitória
+    // Função para mostrar vitória
     function showVictory() {
         try {
             gameActive = false;
             clearInterval(escudoCreationInterval);
+            clearInterval(gameTimerInterval);
             
-            // Feedback de vitória
-            const feedback = document.getElementById('balloonGameFeedback');
-            if (feedback) {
-                feedback.textContent = 'Parabéns! Você coletou todos os escudos! 🎉';
-                feedback.style.color = '#FFD700';
+            // Calcula o tempo final
+            const finalTimeValue = Math.floor((Date.now() - gameStartTime) / 1000);
+            finalTime.textContent = finalTimeValue;
+            
+            // Atualiza o melhor tempo
+            if (finalTimeValue < bestTime) {
+                bestTime = finalTimeValue;
+                localStorage.setItem('bestTime', bestTime);
+                balloonGameFeedbackEl.textContent = `Novo recorde! ${finalTimeValue}s 🏆`;
+            } else {
+                balloonGameFeedbackEl.textContent = `Parabéns! Tempo: ${finalTimeValue}s ⭐`;
             }
             
-            // Toca o som de transição
+            // Mostra o score
+            gameScore.classList.remove('hidden');
+            
+            // Toca o som de vitória
             playAudio('chicote.mp3');
             
             // Ativa a transição mágica
@@ -246,83 +217,37 @@ document.addEventListener('DOMContentLoaded', function() {
                 magicTransition.classList.add('active');
             }
             
-            // Esconde a área do jogo com efeito
-            const gameSection = document.getElementById('balloonGameSection');
-            if (gameSection) {
-                gameSection.style.opacity = '0';
-                gameSection.style.transform = 'translateY(-20px)';
-                
-                // Mostra a área de detalhes da festa após a transição
-                setTimeout(() => {
-                    gameSection.style.display = 'none';
-                    
-                    const detalhesFesta = document.getElementById('detalhesFesta');
-                    if (detalhesFesta) {
-                        detalhesFesta.classList.remove('hidden');
-                        detalhesFesta.style.opacity = '1';
-                        detalhesFesta.style.transform = 'translateY(0)';
-                    }
-                }, 500);
-            }
-            
-            // Remove a classe active da transição mágica
+            // Mostra os detalhes da festa após um delay
             setTimeout(() => {
-                if (magicTransition) {
-                    magicTransition.classList.remove('active');
-                }
-            }, 1500);
+                detalhesFesta.classList.remove('hidden');
+                balloonGameSection.style.display = 'none';
+            }, 2000);
             
         } catch (error) {
             console.error('Erro ao mostrar vitória:', error);
         }
     }
 
-    // Criar efeito de confete
-    function createConfetti() {
-        try {
-            for (let i = 0; i < 100; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = Math.random() * 100 + 'vw';
-                confetti.style.animationDelay = Math.random() * 3 + 's';
-                confetti.style.backgroundColor = ['#FFD700', '#FF0000', '#0000FF'][Math.floor(Math.random() * 3)];
-                document.body.appendChild(confetti);
-                
-                setTimeout(() => {
-                    if (confetti.parentNode) {
-                        confetti.parentNode.removeChild(confetti);
-                    }
-                }, 3000);
-            }
-        } catch (error) {
-            console.error('Erro ao criar confete:', error);
-        }
+    // Função para iniciar o timer
+    function startTimer() {
+        gameTimerInterval = setInterval(() => {
+            const currentTime = Math.floor((Date.now() - gameStartTime) / 1000);
+            gameTimer.textContent = `Tempo: ${currentTime}s`;
+        }, 1000);
     }
 
-    // Limpar estado do jogo
+    // Função para limpar o estado do jogo
     function cleanup() {
-        try {
-            // Remover todos os escudos existentes
-            const escudos = document.querySelectorAll('.shield');
-            escudos.forEach(escudo => {
-                if (escudo.parentNode) {
-                    escudo.parentNode.removeChild(escudo);
-                }
-            });
-            
-            // Limpar intervalo
-            if (escudoCreationInterval) {
-                clearInterval(escudoCreationInterval);
-            }
-            
-            // Resetar estado
-            gameActive = false;
-            escudosColetadosCount = 0;
-            
-            console.log('Estado do jogo limpo');
-        } catch (error) {
-            console.error('Erro ao limpar estado do jogo:', error);
-        }
+        // Remove todos os escudos
+        document.querySelectorAll('.shield').forEach(escudo => escudo.remove());
+        
+        // Limpa os intervalos
+        clearInterval(escudoCreationInterval);
+        clearInterval(gameTimerInterval);
+        
+        // Reseta o estado
+        gameActive = false;
+        escudosColetadosCount = 0;
     }
 
     // Manipular clique na área do jogo
@@ -614,4 +539,15 @@ document.addEventListener('DOMContentLoaded', function() {
         audio.volume = 0.3;
         audio.play().catch(error => console.log('Erro ao tocar áudio:', error));
     }
+
+    // Event Listeners
+    startGameBtn.addEventListener('click', initGame);
+    playAgainBtn.addEventListener('click', () => {
+        gameScore.classList.add('hidden');
+        startGameBtn.style.display = 'block';
+        balloonGameFeedbackEl.textContent = 'Clique em "Iniciar Jogo" para começar! ✨';
+    });
+
+    // Inicialização
+    balloonGameFeedbackEl.textContent = 'Clique em "Iniciar Jogo" para começar! ✨';
 });

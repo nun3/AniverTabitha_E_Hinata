@@ -27,13 +27,43 @@
         </div>
 
         <div id="balloonGameSection">
-            <h2>Hora da Aventura!</h2>
-            <p>Ajude a Mulher Maravilha a coletar seus escudos dourados! 🛡️</p>
+            <h2>🎮 JOGO DOS 5 ESCUDOS 🛡️</h2>
+            
+            <div class="game-info">
+                <h3>OBJETIVO:</h3>
+                <p>Ajude a Mulher Maravilha a encontrar seus 5 escudos dourados que estão escondidos!</p>
+                
+                <h3>COMO JOGAR:</h3>
+                <ul>
+                    <li>Clique no botão "Iniciar Jogo" para começar sua busca.</li>
+                    <li>Encontre e clique nos 5 escudos que aparecem na tela para coletá-los.</li>
+                </ul>
+                
+                <h3>DESAFIO:</h3>
+                <p>Seu objetivo é coletar todos os 5 escudos o mais rápido que puder. Tente bater seu próprio recorde!</p>
+                
+                <h3>DICA:</h3>
+                <p>Preste muita atenção! Os escudos podem estar nos lugares mais inesperados.</p>
+                
+                <p class="game-motivation">BOA SORTE, GUERREIRA! 🦸‍♀️✨</p>
+            </div>
+
+            <div class="game-controls">
+                <button id="startGameBtn" class="game-button">Iniciar Jogo</button>
+                <div id="gameTimer" class="game-timer">Tempo: 0s</div>
+            </div>
+
             <div id="balloonGameProgress" class="game-progress">
                 Escudos coletados: <span id="escudosColetados">0</span>/5
             </div>
-            <div id="balloonGameFeedback">
-                Clique nos escudos para coletá-los! ✨
+            
+            <div id="balloonGameFeedback" class="game-feedback">
+                Clique em "Iniciar Jogo" para começar! ✨
+            </div>
+
+            <div id="gameScore" class="game-score hidden">
+                <h3>Seu Tempo: <span id="finalTime">0</span>s</h3>
+                <button id="playAgainBtn" class="game-button">Jogar Novamente</button>
             </div>
         </div>
         
