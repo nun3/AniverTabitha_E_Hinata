@@ -44,15 +44,17 @@
             <div class="presente-video-wrapper">
                 <!-- Área do Presente Clicável -->
                 <div id="areaPresente">
-                    <h2>Oba! A Mulher Maravilha tem uma mensagem para você!!</h2>
-                    <p> Clique no símbolo dela para ver a mensagem mágica!</p>
-                    <img id="imagemDoPresente" src="./presente.png" alt="Símbolo da Mulher Maravilha">
+                    <h2>Oba! A Mulher Maravilha tem um recado!</h2>
+                    <p>Clique no símbolo dela para ver a mensagem mágica!</p>
+                    <div class="presente-container">
+                        <img id="imagemDoPresente" src="./presente.png" alt="Símbolo da Mulher Maravilha" loading="lazy">
+                    </div>
                 </div>
 
                 <div id="videoModal" class="modal">
                     <div class="modal-content">
-                        <button id="closeModal" class="close-button">&times;</button>
-                        <video id="surpresaVideo">
+                        <button id="closeModal" class="close-button" aria-label="Fechar vídeo">&times;</button>
+                        <video id="surpresaVideo" controls preload="none">
                             <source src="convite.mp4" type="video/mp4">
                             Seu navegador não suporta vídeos HTML5.
                         </video>
