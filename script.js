@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Criar escudo
+    // Função para criar escudo
     function createEscudo() {
         try {
             if (!gameActive) return;
@@ -73,13 +73,30 @@ document.addEventListener('DOMContentLoaded', function() {
             escudo.className = 'shield';
             escudo.alt = 'Escudo da Mulher Maravilha';
             
+            // Ajusta o tamanho baseado na largura da tela
+            const screenWidth = window.innerWidth;
+            let shieldSize;
+            
+            if (screenWidth <= 320) {
+                shieldSize = 45; // Tamanho maior para telas pequenas
+            } else if (screenWidth <= 480) {
+                shieldSize = 50;
+            } else if (screenWidth <= 768) {
+                shieldSize = 55;
+            } else {
+                shieldSize = 60; // Tamanho maior para telas grandes
+            }
+            
+            escudo.style.width = `${shieldSize}px`;
+            escudo.style.height = `${shieldSize}px`;
+            
             // Posição inicial aleatória
-            const startX = Math.random() * (window.innerWidth - 100);
+            const startX = Math.random() * (window.innerWidth - shieldSize);
             escudo.style.left = `${startX}px`;
             escudo.style.top = '-100px';
             
-            // Velocidade e direção aleatórias
-            const speed = 2 + Math.random() * 3;
+            // Velocidade reduzida e mais consistente
+            const speed = 1 + Math.random() * 1.5; // Velocidade mais lenta
             const direction = Math.random() > 0.5 ? 1 : -1;
             
             document.body.appendChild(escudo);
@@ -93,7 +110,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 
                 posY += speed;
-                const posX = startX + Math.sin(posY * 0.02) * 50 * direction;
+                // Movimento mais suave
+                const posX = startX + Math.sin(posY * 0.01) * 30 * direction;
                 
                 escudo.style.top = `${posY}px`;
                 escudo.style.left = `${posX}px`;
@@ -109,33 +127,43 @@ document.addEventListener('DOMContentLoaded', function() {
             // Inicia a animação
             requestAnimationFrame(animate);
             
-            // Adiciona evento de clique
-            escudo.addEventListener('click', () => {
-                if (!gameActive) return;
-                
-                // Toca o som de coleta
-                playAudio('chicote.mp3');
-                
-                // Remove o escudo com efeito
-                escudo.style.transform = 'scale(0)';
-                escudo.style.opacity = '0';
-                
-                setTimeout(() => {
-                    escudo.remove();
-                }, 300);
-                
-                // Atualiza o contador
-                escudosColetadosCount++;
-                escudosColetados.textContent = escudosColetadosCount;
-                
-                // Verifica vitória
-                if (escudosColetadosCount >= config.totalEscudos) {
-                    showVictory();
-                }
-            });
+            // Adiciona evento de clique/toque
+            escudo.addEventListener('click', handleEscudoClick);
+            escudo.addEventListener('touchstart', handleEscudoClick, { passive: true });
             
         } catch (error) {
             console.error('Erro ao criar escudo:', error);
+        }
+    }
+
+    // Função separada para lidar com o clique/toque no escudo
+    function handleEscudoClick(event) {
+        try {
+            if (!gameActive) return;
+            
+            const escudo = event.target;
+            
+            // Toca o som de coleta
+            playAudio('chicote.mp3');
+            
+            // Remove o escudo com efeito
+            escudo.style.transform = 'scale(0)';
+            escudo.style.opacity = '0';
+            
+            setTimeout(() => {
+                escudo.remove();
+            }, 300);
+            
+            // Atualiza o contador
+            escudosColetadosCount++;
+            escudosColetados.textContent = escudosColetadosCount;
+            
+            // Verifica vitória
+            if (escudosColetadosCount >= config.totalEscudos) {
+                showVictory();
+            }
+        } catch (error) {
+            console.error('Erro ao processar clique no escudo:', error);
         }
     }
 

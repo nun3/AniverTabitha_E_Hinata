@@ -341,49 +341,19 @@ body::before {
 
 /* Jogo dos Escudos */
 .shield {
-    width: 60px;
-    height: 60px;
     position: absolute;
     cursor: pointer;
-    transition: transform 0.3s ease, filter 0.3s ease;
-    will-change: transform;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    will-change: transform, opacity;
     backface-visibility: hidden;
     transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-    animation: float 3s ease-in-out infinite;
+    z-index: 1000;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .shield:hover {
-    transform: scale(1.1) rotate(5deg);
-    filter: drop-shadow(0 0 10px var(--wonder-gold));
-}
-
-.shield.collected {
-    animation: collect 0.5s ease-out forwards;
-}
-
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0) rotate(0);
-    }
-    50% {
-        transform: translateY(-10px) rotate(5deg);
-    }
-}
-
-@keyframes collect {
-    0% {
-        transform: scale(1);
-        opacity: 1;
-    }
-    50% {
-        transform: scale(1.2);
-        opacity: 0.8;
-    }
-    100% {
-        transform: scale(0) translateY(-50px);
-        opacity: 0;
-    }
+    transform: scale(1.1);
 }
 
 /* Media Queries - Tablet */
@@ -652,37 +622,43 @@ h3 {
     .container {
         padding: 15px;
         width: 95%;
+        margin: 10px auto;
     }
     
     .convite-imagem-principal {
         width: 100%;
         height: auto;
         max-height: 300px;
+        object-fit: contain;
     }
     
     #detalhesFesta {
         padding: 15px;
         margin: 10px 0;
+        width: 100%;
+        box-sizing: border-box;
     }
     
     .evento-info {
         padding: 12px;
         margin: 8px 0;
+        width: 100%;
+        box-sizing: border-box;
     }
     
     #areaPresente {
         padding: 12px;
         margin: 8px 0;
+        width: 100%;
+        box-sizing: border-box;
     }
     
     .whatsapp-button {
         padding: 12px 20px;
         font-size: 16px;
-    }
-    
-    .shield {
-        width: 40px;
-        height: 40px;
+        width: 100%;
+        max-width: 300px;
+        margin: 10px auto;
     }
 }
 
@@ -690,6 +666,7 @@ h3 {
     .container {
         padding: 10px;
         width: 98%;
+        margin: 5px auto;
     }
     
     .convite-imagem-principal {
@@ -715,17 +692,13 @@ h3 {
         padding: 10px 16px;
         font-size: 14px;
     }
-    
-    .shield {
-        width: 35px;
-        height: 35px;
-    }
 }
 
 @media (max-width: 320px) {
     .container {
         padding: 8px;
         width: 100%;
+        margin: 0;
     }
     
     .convite-imagem-principal {
@@ -751,11 +724,6 @@ h3 {
         padding: 8px 14px;
         font-size: 12px;
     }
-    
-    .shield {
-        width: 30px;
-        height: 30px;
-    }
 }
 
 /* Ajustes para telas maiores */
@@ -774,6 +742,7 @@ h3 {
 @media (max-height: 500px) and (orientation: landscape) {
     .container {
         padding: 10px;
+        margin: 5px auto;
     }
     
     .convite-imagem-principal {
@@ -782,20 +751,27 @@ h3 {
     
     #detalhesFesta {
         padding: 10px;
+        margin: 5px 0;
     }
     
     .evento-info {
         padding: 8px;
+        margin: 4px 0;
     }
     
     #areaPresente {
         padding: 8px;
+        margin: 4px 0;
     }
 }
 
 /* Ajustes para telas de alta resolução */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     .convite-imagem-principal {
+        image-rendering: -webkit-optimize-contrast;
+    }
+    
+    .shield {
         image-rendering: -webkit-optimize-contrast;
     }
 }
@@ -841,12 +817,17 @@ h3 {
 
 /* Ajustes para dispositivos touch */
 @media (hover: none) {
-    .shield:hover {
-        transform: scale(1.1);
+    .shield {
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
     }
     
-    .whatsapp-button:hover {
-        transform: scale(1.05);
+    .shield:active {
+        transform: scale(0.95);
+    }
+    
+    .whatsapp-button:active {
+        transform: scale(0.95);
     }
 }
 
@@ -1303,7 +1284,7 @@ h3 {
 .shield {
     position: absolute;
     cursor: pointer;
-    transition: transform 0.3s ease, filter 0.3s ease;
+    transition: transform 0.3s ease-in-out, filter 0.3s ease;
     will-change: transform;
     backface-visibility: hidden;
     transform: translateZ(0);
