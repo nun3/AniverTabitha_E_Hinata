@@ -1,0 +1,1271 @@
+@import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Fredoka+One&family=Comfortaa:wght@400;700&display=swap');
+
+:root {
+    --primary-color: #FF0000; /* Vermelho da Mulher Maravilha */
+    --secondary-color: #0000FF; /* Azul da Mulher Maravilha */
+    --accent-color: #FFD700; /* Dourado da Mulher Maravilha */
+    --text-color: #333;
+    --background-color: #FFF5F5;
+    --wonder-red: #FF0000;
+    --wonder-blue: #0000FF;
+    --wonder-gold: #FFD700;
+    --wonder-white: #FFFFFF;
+    --wonder-dark: #1A1A1A;
+
+    --font-principal: 'Comfortaa', cursive;
+    --font-titulos: 'Fredoka One', cursive;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, var(--wonder-blue) 0%, #000080 100%);
+    font-family: 'Bubblegum Sans', cursive;
+    color: var(--wonder-white);
+    overflow-x: hidden;
+    min-height: 100vh;
+    padding: clamp(10px, 2vw, 20px);
+    position: relative;
+}
+
+/* Estrelas */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(6px 6px at 20px 30px, var(--wonder-white) 50%, rgba(0,0,0,0)),
+        radial-gradient(6px 6px at 40px 70px, var(--wonder-white) 50%, rgba(0,0,0,0)),
+        radial-gradient(6px 6px at 50px 160px, var(--wonder-white) 50%, rgba(0,0,0,0)),
+        radial-gradient(6px 6px at 90px 40px, var(--wonder-white) 50%, rgba(0,0,0,0)),
+        radial-gradient(6px 6px at 130px 80px, var(--wonder-white) 50%, rgba(0,0,0,0)),
+        radial-gradient(6px 6px at 160px 120px, var(--wonder-white) 50%, rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    animation: twinkle 4s ease-in-out infinite;
+    opacity: 0.4;
+    z-index: 0;
+}
+
+@keyframes twinkle {
+    0% { opacity: 0.4; }
+    50% { opacity: 0.7; }
+    100% { opacity: 0.4; }
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+    border: 2px solid var(--wonder-gold);
+    overflow: visible;
+}
+
+/* Imagem Central do Convite */
+#imagemCentral {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    margin: 2rem auto;
+    border-radius: 15px;
+    box-shadow: 0 0 30px var(--wonder-gold);
+    border: 3px solid var(--wonder-gold);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease;
+    animation: pulseGlow 2s infinite;
+}
+
+#imagemCentral::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, 
+        rgba(255, 215, 0, 0.2) 0%,
+        rgba(0, 0, 0, 0) 50%,
+        rgba(255, 215, 0, 0.2) 100%);
+    animation: shimmer 3s infinite;
+    pointer-events: none;
+}
+
+#imagemCentral::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+        circle at center,
+        rgba(255, 215, 0, 0.1) 0%,
+        rgba(0, 0, 0, 0) 70%
+    );
+    animation: rotateGlow 10s linear infinite;
+    pointer-events: none;
+}
+
+#imagemCentral:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 40px var(--wonder-gold);
+}
+
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 30px var(--wonder-gold);
+    }
+    50% {
+        box-shadow: 0 0 40px var(--wonder-gold);
+    }
+    100% {
+        box-shadow: 0 0 30px var(--wonder-gold);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%) rotate(45deg);
+    }
+    100% {
+        transform: translateX(100%) rotate(45deg);
+    }
+}
+
+@keyframes rotateGlow {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Títulos */
+h2 {
+    color: var(--wonder-blue);
+    text-align: center;
+    font-family: 'Fredoka One', cursive;
+    text-transform: uppercase;
+    border-bottom: 3px solid var(--wonder-gold);
+    padding-bottom: 10px;
+    margin: clamp(20px, 4vw, 30px) 0;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+h3 {
+    color: var(--wonder-blue);
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Seções de informação */
+.info-evento {
+    background: linear-gradient(135deg, rgb(0, 0, 80) 0%, rgb(0, 0, 150) 100%);
+    border: 3px solid var(--wonder-gold);
+    padding: clamp(15px, 3vw, 20px);
+    margin: clamp(15px, 3vw, 20px) 0;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: var(--wonder-white);
+}
+
+.info-evento:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.info-evento p {
+    color: var(--wonder-white);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Botão do WhatsApp */
+.whatsapp-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 30px;
+    background: linear-gradient(135deg, var(--wonder-blue) 0%, rgb(0, 0, 200) 100%);
+    color: var(--wonder-white);
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 1.2em;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(0, 0, 255, 0.3);
+    border: 2px solid var(--wonder-gold);
+    font-family: 'Comfortaa', cursive;
+}
+
+.whatsapp-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px rgba(0, 0, 255, 0.5);
+    background: linear-gradient(135deg, rgb(0, 0, 200) 0%, var(--wonder-blue) 100%);
+}
+
+.whatsapp-button i {
+    margin-right: 10px;
+    font-size: 1.4em;
+    color: var(--wonder-gold);
+}
+
+/* Link do mapa */
+.map-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    font-family: 'Comfortaa', cursive;
+}
+
+.map-link:hover {
+    color: var(--secondary-color);
+}
+
+.map-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Seção do jogo de balões */
+#balloonGameSection {
+    text-align: center;
+    padding: 2rem;
+    margin: 2rem 0;
+    background: linear-gradient(135deg, var(--wonder-dark) 0%, #000033 100%);
+    border: 3px solid var(--wonder-gold);
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+#balloonGameSection h2 {
+    color: var(--wonder-gold);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#balloonGameSection p {
+    color: var(--wonder-white);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.game-progress {
+    color: var(--wonder-gold);
+    font-size: 1.2rem;
+    margin: 1rem 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.feedback {
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-top: 15px;
+    font-family: 'Bubblegum Sans', cursive;
+}
+
+/* Estilos para o contêiner do vídeo */
+#videoWrapper {
+    width: min(270px, 90%);
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    background-color: #000;
+    margin: 20px auto;
+    opacity: 0;
+    transform: scale(0.8) translateY(30px);
+    transition: opacity 0.3s ease-out, transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+#videoWrapper.visible {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+#videoAniversario {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Área do presente */
+#areaPresente {
+    text-align: center;
+    margin: 2rem 0;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 15px;
+    border: 1px solid var(--wonder-gold);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#areaPresente.hidden {
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+}
+
+#areaPresente h2 {
+    color: var(--wonder-gold);
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#areaPresente p {
+    color: var(--wonder-white);
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+#imagemDoPresente {
+    width: 150px;
+    height: 150px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    object-fit: contain;
+    max-width: 100%;
+    margin: 0 auto;
+    display: inline-block;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+    }
+    50% {
+        transform: scale(1.05);
+        filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.7));
+    }
+    100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+    }
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Mensagem de Vitória */
+.victory-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+
+.victory-message h2 {
+    color: #FFD700;
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.victory-message p {
+    color: #FF0000;
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 2em;
+        margin-bottom: 15px;
+    }
+
+    h2 {
+        font-size: 1.5em;
+    }
+
+    p {
+        font-size: 1rem;
+        line-height: 1.4;
+    }
+
+    #areaPresente {
+        margin: 20px;
+        padding: 15px;
+    }
+
+    #areaPresente h2 {
+        font-size: 1.5em;
+    }
+
+    #imagemDoPresente {
+        width: 120px;
+        height: 120px;
+    }
+
+    #videoContainer {
+        padding: 10px;
+        max-width: 95vw;
+    }
+
+    #videoContainer video {
+        max-width: 100%;
+        max-height: 70vh;
+    }
+
+    #confirmarPresenca {
+        margin: 20px;
+        padding: 15px;
+    }
+
+    #confirmarPresenca h2 {
+        font-size: 1.5em;
+    }
+
+    .whatsapp-button {
+        padding: 12px 25px;
+        font-size: 1.1em;
+        width: 90%;
+        max-width: 300px;
+    }
+
+    .detalhes {
+        padding: 15px;
+    }
+
+    .detalhes h2 {
+        font-size: 1.5em;
+    }
+
+    .detalhes p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8em;
+    }
+
+    h2 {
+        font-size: 1.3em;
+    }
+
+    p {
+        font-size: 0.9rem;
+    }
+
+    #imagemDoPresente {
+        width: 100px;
+        height: 100px;
+    }
+
+    #videoContainer {
+        padding: 8px;
+    }
+
+    #videoContainer video {
+        max-height: 60vh;
+    }
+
+    .whatsapp-button {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+
+    .detalhes {
+        padding: 10px;
+    }
+}
+
+/* Ajustes para telas muito pequenas */
+@media (max-width: 320px) {
+    h1 {
+        font-size: 1.5em;
+    }
+
+    h2 {
+        font-size: 1.2em;
+    }
+
+    #imagemDoPresente {
+        width: 80px;
+        height: 80px;
+    }
+
+    .whatsapp-button {
+        padding: 8px 16px;
+        font-size: 0.9em;
+    }
+}
+
+/* Ajustes para telas grandes */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    #videoContainer {
+        max-width: 80vw;
+    }
+
+    #videoContainer video {
+        max-height: 80vh;
+    }
+}
+
+/* Ajustes para orientação paisagem em dispositivos móveis */
+@media (max-height: 500px) and (orientation: landscape) {
+    .container {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+
+    #imagemDoPresente {
+        width: 80px;
+        height: 80px;
+    }
+
+    #videoContainer video {
+        max-height: 90vh;
+    }
+
+    .whatsapp-button {
+        padding: 8px 16px;
+        font-size: 0.9em;
+    }
+}
+
+/* Classes utilitárias */
+.hidden {
+    display: none;
+}
+
+.secao-conteudo {
+    margin-top: 30px;
+}
+
+/* Estilos dos Balões */
+.balloon {
+    position: fixed;
+    cursor: pointer;
+    transition: transform 0.2s, opacity 0.2s;
+    z-index: 1000;
+    width: clamp(40px, 8vw, 80px);
+    height: clamp(48px, 9.6vw, 96px);
+    filter: drop-shadow(0 3px 5px rgba(0,0,0,0.2));
+}
+
+.balloon:hover {
+    transform: scale(1.1);
+}
+
+.balloon::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 20%;
+    height: 20%;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+}
+
+/* Animação de flutuação */
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-10px) rotate(5deg);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+}
+
+.balloon {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Animações de transição */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOutDown {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+/* Transição mágica */
+.magic-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, transparent 0%, rgba(255, 215, 0, 0.2) 50%, transparent 100%);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.magic-transition.active {
+    opacity: 1;
+    animation: magicPulse 1s ease-in-out;
+}
+
+@keyframes magicPulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+/* Área de Detalhes da Festa */
+#detalhesFesta {
+    position: relative;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-top: 2rem;
+    border: 1px solid var(--wonder-gold);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+}
+
+#detalhesFesta.visible {
+    opacity: 1;
+    transform: translateY(0);
+    animation: magicalEntrance 1s ease-out forwards;
+}
+
+#detalhesFesta h2 {
+    color: var(--wonder-gold);
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#detalhesFesta h2::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 0%,
+        rgba(255, 215, 0, 0.3) 25%,
+        rgba(255, 215, 0, 0.5) 50%,
+        rgba(255, 215, 0, 0.3) 75%,
+        transparent 100%
+    );
+    animation: titleShine 3s infinite linear;
+    pointer-events: none;
+}
+
+@keyframes titleShine {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* Informações do Evento */
+.evento-info {
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 15px;
+    padding: 25px;
+    margin: 30px auto;
+    max-width: 600px;
+    border: 1px solid var(--wonder-gold);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+}
+
+.evento-info h3 {
+    color: var(--wonder-gold);
+    text-align: center;
+    font-size: 1.8em;
+    margin-bottom: 25px;
+    font-family: 'Comfortaa', cursive;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.evento-info p {
+    color: var(--wonder-white);
+    text-align: left;
+    margin: 15px 0;
+    font-size: 1.1em;
+    line-height: 1.6;
+    padding-left: 20px;
+    position: relative;
+}
+
+.evento-info p strong {
+    color: var(--wonder-gold);
+    display: inline-block;
+    min-width: 80px;
+    margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+    .evento-info {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    .evento-info h3 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+
+    .evento-info p {
+        font-size: 1em;
+        margin: 12px 0;
+        padding-left: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .evento-info {
+        margin: 15px;
+        padding: 15px;
+    }
+
+    .evento-info h3 {
+        font-size: 1.3em;
+        margin-bottom: 15px;
+    }
+
+    .evento-info p {
+        font-size: 0.9em;
+        margin: 10px 0;
+        padding-left: 10px;
+    }
+}
+
+/* Estilos do Jogo de Estrelas */
+.star {
+    position: fixed;
+    cursor: pointer;
+    transition: transform 0.2s, opacity 0.2s;
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+    z-index: 1000;
+    pointer-events: auto;
+    background-color: #FFD700;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    animation: twinkle 1s infinite alternate;
+    opacity: 1;
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+.star:hover {
+    transform: scale(1.2) rotate(15deg) translateZ(0);
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8));
+}
+
+@keyframes twinkle {
+    0% {
+        opacity: 0.7;
+        filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+    }
+    100% {
+        opacity: 1;
+        filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
+    }
+}
+
+/* Feedback do Jogo */
+#balloonGameFeedback {
+    color: var(--wonder-gold);
+    font-size: 1.5rem;
+    margin: 1rem 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Contador de Estrelas */
+#balloonsPoppedCountText,
+#balloonsTargetCountText {
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 1.2rem;
+    color: var(--wonder-gold);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos do Jogo do Escudo */
+.shield {
+    position: fixed;
+    cursor: pointer;
+    transition: transform 0.2s, opacity 0.2s;
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+    z-index: 1000;
+    pointer-events: auto;
+    background-color: #FFD700;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    animation: shieldGlow 1s infinite alternate;
+    opacity: 1;
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+.shield::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60%;
+    height: 60%;
+    background-color: #FF0000;
+    transform: translate(-50%, -50%);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.shield::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30%;
+    height: 30%;
+    background-color: #FFFFFF;
+    transform: translate(-50%, -50%);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.shield:hover {
+    transform: scale(1.2) rotate(15deg) translateZ(0);
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8));
+}
+
+@keyframes shieldGlow {
+    0% {
+        opacity: 0.7;
+        filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+    }
+    100% {
+        opacity: 1;
+        filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
+    }
+}
+
+/* Contêiner do Vídeo */
+#videoContainer {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 30px var(--wonder-gold);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#videoContainer.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+#videoContainer.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -50%) scale(0.8);
+}
+
+#videoContainer video {
+    width: 100%;
+    height: auto;
+    max-width: 90vw;
+    max-height: 80vh;
+    border-radius: 10px;
+    box-shadow: 0 0 20px var(--wonder-gold);
+    display: block;
+    border: 2px solid var(--wonder-gold);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+/* Esconder controles do vídeo */
+#videoContainer video::-webkit-media-controls {
+    display: none !important;
+}
+
+#videoContainer video::-webkit-media-controls-enclosure {
+    display: none !important;
+}
+
+#videoContainer video::-webkit-media-controls-panel {
+    display: none !important;
+}
+
+#videoContainer video::-webkit-media-controls-play-button {
+    display: none !important;
+}
+
+#videoContainer video::-webkit-media-controls-timeline {
+    display: none !important;
+}
+
+#videoContainer video::-webkit-media-controls-current-time-display {
+    display: none !important;
+}
+
+#videoContainer video::-webkit-media-controls-time-remaining-display {
+    display: none !important;
+}
+
+#videoContainer video::-webkit-media-controls-mute-button {
+    display: none !important;
+}
+
+#videoContainer video::-webkit-media-controls-volume-slider {
+    display: none !important;
+}
+
+#videoContainer video::-webkit-media-controls-fullscreen-button {
+    display: none !important;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 10px var(--wonder-gold),
+                    0 0 20px var(--wonder-gold),
+                    0 0 30px var(--wonder-gold);
+    }
+    to {
+        box-shadow: 0 0 20px var(--wonder-gold),
+                    0 0 30px var(--wonder-gold),
+                    0 0 40px var(--wonder-gold);
+    }
+}
+
+/* Efeito de Transição Mágica */
+#magicTransition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, transparent 0%, rgba(255, 215, 0, 0.2) 50%, transparent 100%);
+    pointer-events: none;
+    opacity: 0;
+    z-index: 999;
+    transition: opacity 0.5s ease;
+}
+
+#magicTransition.active {
+    opacity: 1;
+    animation: magicPulse 1.5s ease-in-out;
+}
+
+@keyframes magicPulse {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+/* Efeito de Brilho para a Área de Detalhes */
+#detalhesFesta::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 0%,
+        rgba(255, 215, 0, 0.1) 25%,
+        rgba(255, 215, 0, 0.2) 50%,
+        rgba(255, 215, 0, 0.1) 75%,
+        transparent 100%
+    );
+    animation: shineEffect 3s infinite linear;
+    pointer-events: none;
+}
+
+@keyframes shineEffect {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* Efeito de Entrada Mágica */
+@keyframes magicalEntrance {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+        filter: blur(10px);
+    }
+    50% {
+        opacity: 0.5;
+        transform: translateY(15px) scale(0.95);
+        filter: blur(5px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+#confirmarPresenca {
+    text-align: center;
+    margin: 40px auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    max-width: 600px;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+    border: 1px solid var(--wonder-gold);
+}
+
+#confirmarPresenca h2 {
+    color: var(--wonder-gold);
+    margin-bottom: 15px;
+    font-size: 1.8em;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    font-family: 'Comfortaa', cursive;
+}
+
+#confirmarPresenca p {
+    color: var(--wonder-white);
+    margin-bottom: 20px;
+    font-size: 1.1em;
+    font-family: 'Comfortaa', cursive;
+}
+
+/* Remover os estilos do efeito de partículas */
+.wonder-particle {
+    display: none;
+}
+
+@keyframes particle-glow {
+    from {
+        box-shadow: none;
+    }
+    to {
+        box-shadow: none;
+    }
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 0 30px var(--wonder-gold);
+    border: 2px solid var(--wonder-gold);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.modal.visible .modal-content {
+    transform: scale(1);
+}
+
+.close-button {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--wonder-gold);
+    color: #000;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    transition: all 0.3s ease;
+    z-index: 1001;
+}
+
+.close-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px var(--wonder-gold);
+}
+
+#surpresaVideo {
+    width: 100%;
+    height: auto;
+    max-height: 80vh;
+    border-radius: 10px;
+    display: block;
+}
+
+/* Ícones Flutuantes */
+.floating-icon {
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.8;
+    transition: transform 0.3s ease;
+    filter: drop-shadow(0 0 10px var(--wonder-gold));
+}
+
+#escudoIcon {
+    top: 20px;
+    right: 20px;
+    animation: float 3s ease-in-out infinite;
+    transform-origin: center;
+}
+
+#estrelaIcon {
+    bottom: 20px;
+    left: 20px;
+    animation: float 3s ease-in-out infinite reverse;
+    transform-origin: center;
+}
+
+.floating-icon:hover {
+    transform: scale(1.1) rotate(5deg);
+    filter: drop-shadow(0 0 15px var(--wonder-gold));
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(5deg);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+}
+
+/* Presente Video Wrapper */
+.presente-video-wrapper {
+    position: relative;
+    z-index: 2;
+}

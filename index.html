@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convite de Aniversário - Mulher Maravilha</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Imagem Central do Convite -->
+        <div class="imagem-container">
+            <img id="imagemCentral" src="./tabithahinata.png" alt="Mulher Maravilha" class="convite-imagem-principal">
+        </div>
+
+        <div id="balloonGameSection">
+            <h2>Hora da Aventura!</h2>
+            <p>Ajude a Mulher Maravilha a coletar seus escudos dourados! 🛡️</p>
+            <div id="balloonGameProgress" class="game-progress">
+                Escudos coletados: 0/5
+            </div>
+            <div id="balloonGameFeedback">
+                Clique nos escudos para coletá-los! ✨
+            </div>
+        </div>
+        
+        <!-- Área de Detalhes da Festa (inicialmente oculta) -->
+        <div id="detalhesFesta" class="hidden">
+            <h2>Parabéns! Você desbloqueou a festa!</h2>
+            
+            <!-- Informações do Evento -->
+            <div class="evento-info">
+                <h3>Detalhes da Festa</h3>
+                <p><strong>Data:</strong> 04 de Julho de 2025</p>
+                <p><strong>Local:</strong> Escola Crescer</p>
+                <p><strong>Tema:</strong> Mulher Maravilha</p>
+            </div>
+
+            <!-- Área do Presente -->
+            <div class="presente-video-wrapper">
+                <!-- Área do Presente Clicável -->
+                <div id="areaPresente">
+                    <h2>Oba! A Mulher Maravilha tem uma mensagem para você!!</h2>
+                    <p> Clique no símbolo dela para ver a mensagem mágica!</p>
+                    <img id="imagemDoPresente" src="./presente.png" alt="Símbolo da Mulher Maravilha">
+                </div>
+
+                <div id="videoModal" class="modal">
+                    <div class="modal-content">
+                        <button id="closeModal" class="close-button">&times;</button>
+                        <video id="surpresaVideo">
+                            <source src="convite.mp4" type="video/mp4">
+                            Seu navegador não suporta vídeos HTML5.
+                        </video>
+                    </div>
+                </div>
+
+                <div id="confirmarPresenca">
+                    <h2>Confirme sua presença!</h2>
+                    <p>Clique no botão abaixo para enviar sua confirmação via WhatsApp</p>
+                    <a href="https://wa.me/5541991526177?text=Oi%20mulher%20maravilha%2C%20pode%20contar%20comigo!" target="_blank" class="whatsapp-button">
+                        <i class="fab fa-whatsapp"></i> Confirmar Presença
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Elemento de Transição Mágica -->
+    <div id="magicTransition"></div>
+
+    <!-- Ícones Flutuantes -->
+    <img src="./escudo.png" alt="Escudo da Mulher Maravilha" class="floating-icon" id="escudoIcon">
+    <img src="./estrela.png" alt="Estrela da Mulher Maravilha" class="floating-icon" id="estrelaIcon">
+
+    <script src="script.js"></script>
+</body>
+</html>
