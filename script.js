@@ -67,39 +67,73 @@ document.addEventListener('DOMContentLoaded', function() {
     function createEscudo() {
         try {
             if (!gameActive) return;
-
-            const escudo = document.createElement('div');
+            
+            const escudo = document.createElement('img');
+            escudo.src = 'escudo.png';
             escudo.className = 'shield';
+            escudo.alt = 'Escudo da Mulher Maravilha';
             
-            // Tamanho aleatório
-            const size = Math.random() * (config.escudoSize.max - config.escudoSize.min) + config.escudoSize.min;
-            escudo.style.width = `${size}px`;
-            escudo.style.height = `${size}px`;
+            // Posição inicial aleatória
+            const startX = Math.random() * (window.innerWidth - 100);
+            escudo.style.left = `${startX}px`;
+            escudo.style.top = '-100px';
             
-            // Posição aleatória dentro da área do jogo
-            const gameRect = balloonGameSection.getBoundingClientRect();
-            const maxX = gameRect.width - size;
-            const maxY = gameRect.height - size;
-            escudo.style.left = `${Math.random() * maxX}px`;
-            escudo.style.top = `${Math.random() * maxY}px`;
+            // Velocidade e direção aleatórias
+            const speed = 2 + Math.random() * 3;
+            const direction = Math.random() > 0.5 ? 1 : -1;
             
-            // Adicionar ao DOM
-            balloonGameSection.appendChild(escudo);
+            document.body.appendChild(escudo);
             
-            // Adicionar evento de clique
-            escudo.addEventListener('click', (e) => {
-                e.stopPropagation();
-                collectEscudo(escudo);
+            // Animação do escudo
+            let posY = -100;
+            const animate = () => {
+                if (!gameActive) {
+                    escudo.remove();
+                    return;
+                }
+                
+                posY += speed;
+                const posX = startX + Math.sin(posY * 0.02) * 50 * direction;
+                
+                escudo.style.top = `${posY}px`;
+                escudo.style.left = `${posX}px`;
+                
+                // Remove se sair da tela
+                if (posY > window.innerHeight) {
+                    escudo.remove();
+                } else {
+                    requestAnimationFrame(animate);
+                }
+            };
+            
+            // Inicia a animação
+            requestAnimationFrame(animate);
+            
+            // Adiciona evento de clique
+            escudo.addEventListener('click', () => {
+                if (!gameActive) return;
+                
+                // Toca o som de coleta
+                playAudio('chicote.mp3');
+                
+                // Remove o escudo com efeito
+                escudo.style.transform = 'scale(0)';
+                escudo.style.opacity = '0';
+                
+                setTimeout(() => {
+                    escudo.remove();
+                }, 300);
+                
+                // Atualiza o contador
+                escudosColetadosCount++;
+                escudosColetados.textContent = escudosColetadosCount;
+                
+                // Verifica vitória
+                if (escudosColetadosCount >= config.totalEscudos) {
+                    showVictory();
+                }
             });
             
-            // Remover após 5 segundos se não for coletado
-            setTimeout(() => {
-                if (escudo.parentNode) {
-                    removeEscudo(escudo);
-                }
-            }, 5000);
-            
-            console.log('Escudo criado');
         } catch (error) {
             console.error('Erro ao criar escudo:', error);
         }
@@ -169,28 +203,47 @@ document.addEventListener('DOMContentLoaded', function() {
             clearInterval(escudoCreationInterval);
             
             // Feedback de vitória
-            balloonGameFeedbackEl.textContent = 'Parabéns! Você coletou todos os escudos! 🎉';
-            balloonGameFeedbackEl.style.color = '#FFD700';
+            const feedback = document.getElementById('balloonGameFeedback');
+            if (feedback) {
+                feedback.textContent = 'Parabéns! Você coletou todos os escudos! 🎉';
+                feedback.style.color = '#FFD700';
+            }
             
-            // Criar efeito de confete
-            createConfetti();
+            // Toca o som de transição
+            playAudio('chicote.mp3');
             
-            // Mostrar a área de detalhes da festa
-            if (detalhesFesta) {
-                // Esconder a área do jogo com efeito
-                balloonGameSection.style.opacity = '0';
-                balloonGameSection.style.transform = 'translateY(-20px) scale(0.9)';
+            // Ativa a transição mágica
+            const magicTransition = document.getElementById('magicTransition');
+            if (magicTransition) {
+                magicTransition.classList.add('active');
+            }
+            
+            // Esconde a área do jogo com efeito
+            const gameSection = document.getElementById('balloonGameSection');
+            if (gameSection) {
+                gameSection.style.opacity = '0';
+                gameSection.style.transform = 'translateY(-20px)';
                 
+                // Mostra a área de detalhes da festa após a transição
                 setTimeout(() => {
-                    balloonGameSection.style.display = 'none';
+                    gameSection.style.display = 'none';
                     
-                    // Mostrar detalhes da festa com efeito mágico
-                    detalhesFesta.classList.remove('hidden');
-                    detalhesFesta.classList.add('visible');
+                    const detalhesFesta = document.getElementById('detalhesFesta');
+                    if (detalhesFesta) {
+                        detalhesFesta.classList.remove('hidden');
+                        detalhesFesta.style.opacity = '1';
+                        detalhesFesta.style.transform = 'translateY(0)';
+                    }
                 }, 500);
             }
             
-            console.log('Vitória alcançada');
+            // Remove a classe active da transição mágica
+            setTimeout(() => {
+                if (magicTransition) {
+                    magicTransition.classList.remove('active');
+                }
+            }, 1500);
+            
         } catch (error) {
             console.error('Erro ao mostrar vitória:', error);
         }
@@ -525,5 +578,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeButton = document.getElementById('closeModal');
     if (closeButton) {
         closeButton.addEventListener('click', closeVideo);
+    }
+
+    // Função para tocar um áudio
+    function playAudio(filename) {
+        const audio = new Audio(filename);
+        audio.volume = 0.3;
+        audio.play().catch(error => console.log('Erro ao tocar áudio:', error));
     }
 });

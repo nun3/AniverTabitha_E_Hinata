@@ -650,248 +650,123 @@ h3 {
 /* Responsividade */
 @media (max-width: 768px) {
     .container {
-        padding: 1rem;
-        margin: 0.5rem;
+        padding: 15px;
         width: 95%;
     }
-
-    #imagemCentral {
-        max-width: 100%;
-        margin: 1rem auto;
-    }
-
-    h2 {
-        font-size: 1.5rem;
-        margin: 1rem 0;
-    }
-
-    h3 {
-        font-size: 1.2rem;
-    }
-
-    .whatsapp-button {
-        padding: 12px 24px;
-        font-size: 1rem;
-        width: 90%;
-        margin: 0 auto;
-    }
-
-    .evento-info {
-        padding: 1rem;
-        margin: 1rem 0;
-    }
-
-    .modal-content {
-        width: 95%;
-        padding: 1rem;
-    }
-
-    #surpresaVideo {
+    
+    .convite-imagem-principal {
         width: 100%;
         height: auto;
+        max-height: 300px;
     }
-
-    p {
-        font-size: 1rem;
-        line-height: 1.4;
+    
+    #detalhesFesta {
+        padding: 15px;
+        margin: 10px 0;
     }
-
+    
+    .evento-info {
+        padding: 12px;
+        margin: 8px 0;
+    }
+    
     #areaPresente {
-        padding: 1rem;
-        margin: 1rem auto;
+        padding: 12px;
+        margin: 8px 0;
     }
-
-    #areaPresente h2 {
-        font-size: 1.3rem;
-        margin-bottom: 0.8rem;
+    
+    .whatsapp-button {
+        padding: 12px 20px;
+        font-size: 16px;
     }
-
-    #areaPresente p {
-        font-size: 1rem;
-        margin-bottom: 1rem;
-    }
-
-    #imagemDoPresente {
-        width: clamp(100px, 25vw, 150px);
-    }
-
-    #videoContainer {
-        padding: 10px;
-        max-width: 95vw;
-    }
-
-    #videoContainer video {
-        max-width: 100%;
-        max-height: 70vh;
-    }
-
-    #confirmarPresenca {
-        margin: 20px;
-        padding: 15px;
-    }
-
-    #confirmarPresenca h2 {
-        font-size: 1.5em;
-    }
-
-    .detalhes {
-        padding: 15px;
-    }
-
-    .detalhes h2 {
-        font-size: 1.5em;
-    }
-
-    .detalhes p {
-        font-size: 1rem;
+    
+    .shield {
+        width: 40px;
+        height: 40px;
     }
 }
 
 @media (max-width: 480px) {
-    body {
-        padding: 5px;
-    }
-
     .container {
-        padding: 1rem;
-        margin: 0.5rem auto;
-    }
-
-    h2 {
-        font-size: 1.3rem;
-    }
-
-    h3 {
-        font-size: 1.1rem;
-    }
-
-    .whatsapp-button {
-        padding: 10px 20px;
-        font-size: 0.9rem;
-    }
-
-    .evento-info p {
-        font-size: 0.9rem;
-        margin: 0.5rem 0;
-    }
-
-    #areaPresente {
-        padding: 0.8rem;
-        margin: 0.8rem auto;
-    }
-
-    #areaPresente h2 {
-        font-size: 1.1rem;
-        margin-bottom: 0.6rem;
-    }
-
-    #areaPresente p {
-        font-size: 0.9rem;
-        margin-bottom: 0.8rem;
-    }
-
-    #imagemDoPresente {
-        width: clamp(80px, 20vw, 120px);
-    }
-
-    #videoContainer {
-        padding: 8px;
-    }
-
-    #videoContainer video {
-        max-height: 60vh;
-    }
-
-    .detalhes {
         padding: 10px;
+        width: 98%;
     }
-}
-
-@media (max-height: 600px) and (orientation: landscape) {
-    .container {
-        padding: 0.5rem;
+    
+    .convite-imagem-principal {
+        max-height: 250px;
     }
-
-    #imagemCentral {
-        max-width: 40%;
-        margin: 0.5rem auto;
+    
+    #detalhesFesta {
+        padding: 12px;
+        margin: 8px 0;
     }
-
+    
     .evento-info {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 1rem;
+        padding: 10px;
+        margin: 6px 0;
     }
-
-    .evento-info p {
-        margin: 0.25rem 0;
-    }
-
-    .whatsapp-button {
-        padding: 8px 16px;
-        font-size: 0.9rem;
-    }
-
+    
     #areaPresente {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
-        gap: 1rem;
-        padding: 0.8rem;
+        padding: 10px;
+        margin: 6px 0;
     }
-
-    #areaPresente h2 {
-        width: 100%;
-        margin-bottom: 0.4rem;
-    }
-
-    #areaPresente p {
-        width: 60%;
-        margin-bottom: 0;
-    }
-
-    #imagemDoPresente {
-        width: clamp(60px, 15vw, 100px);
-        margin: 0;
-    }
-}
-
-/* Ajustes para telas muito pequenas */
-@media (max-width: 320px) {
-    h1 {
-        font-size: 1.5em;
-    }
-
-    h2 {
-        font-size: 1.2em;
-    }
-
-    #imagemDoPresente {
-        width: 80px;
-        height: 80px;
-    }
-
+    
     .whatsapp-button {
-        padding: 8px 16px;
-        font-size: 0.9em;
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+    
+    .shield {
+        width: 35px;
+        height: 35px;
     }
 }
 
-/* Ajustes para telas grandes */
+@media (max-width: 320px) {
+    .container {
+        padding: 8px;
+        width: 100%;
+    }
+    
+    .convite-imagem-principal {
+        max-height: 200px;
+    }
+    
+    #detalhesFesta {
+        padding: 10px;
+        margin: 6px 0;
+    }
+    
+    .evento-info {
+        padding: 8px;
+        margin: 4px 0;
+    }
+    
+    #areaPresente {
+        padding: 8px;
+        margin: 4px 0;
+    }
+    
+    .whatsapp-button {
+        padding: 8px 14px;
+        font-size: 12px;
+    }
+    
+    .shield {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+/* Ajustes para telas maiores */
 @media (min-width: 1200px) {
     .container {
         max-width: 1200px;
         margin: 0 auto;
     }
-
-    #videoContainer {
-        max-width: 80vw;
-    }
-
-    #videoContainer video {
-        max-height: 80vh;
+    
+    .convite-imagem-principal {
+        max-height: 500px;
     }
 }
 
@@ -900,24 +775,95 @@ h3 {
     .container {
         padding: 10px;
     }
-
-    h1 {
-        font-size: 1.5em;
-        margin-bottom: 10px;
+    
+    .convite-imagem-principal {
+        max-height: 200px;
     }
-
-    #imagemDoPresente {
-        width: 80px;
-        height: 80px;
+    
+    #detalhesFesta {
+        padding: 10px;
     }
-
-    #videoContainer video {
-        max-height: 90vh;
+    
+    .evento-info {
+        padding: 8px;
     }
+    
+    #areaPresente {
+        padding: 8px;
+    }
+}
 
+/* Ajustes para telas de alta resolução */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .convite-imagem-principal {
+        image-rendering: -webkit-optimize-contrast;
+    }
+}
+
+/* Ajustes para modo escuro do sistema */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1a1a1a;
+    }
+    
+    .container {
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.8));
+    }
+    
+    #detalhesFesta, .evento-info, #areaPresente {
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.7));
+    }
+}
+
+/* Transições suaves */
+#detalhesFesta, .evento-info, #areaPresente {
+    transition: all 0.3s ease-in-out;
+}
+
+.shield {
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+/* Melhorias de performance */
+.shield {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+}
+
+/* Ajustes de acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* Ajustes para dispositivos touch */
+@media (hover: none) {
+    .shield:hover {
+        transform: scale(1.1);
+    }
+    
+    .whatsapp-button:hover {
+        transform: scale(1.05);
+    }
+}
+
+/* Ajustes para impressão */
+@media print {
+    .container {
+        background: none;
+        box-shadow: none;
+    }
+    
+    #detalhesFesta, .evento-info, #areaPresente {
+        border: 1px solid #000;
+        background: none;
+    }
+    
     .whatsapp-button {
-        padding: 8px 16px;
-        font-size: 0.9em;
+        display: none;
     }
 }
 
@@ -1464,4 +1410,5 @@ h3 {
         width: 40px !important;
         height: 40px !important;
     }
+}
 }
