@@ -339,18 +339,6 @@ body::before {
     min-width: 80px;
 }
 
-/* Jogo dos Escudos */
-.shield {
-    position: absolute;
-    cursor: pointer;
-    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-    will-change: transform, opacity;
-    backface-visibility: hidden;
-    transform: translateZ(0);
-    z-index: 1000;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-}
 
 .shield:hover {
     transform: scale(1.1);
@@ -1212,10 +1200,10 @@ h3 {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 2000;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 
 .modal.visible {
@@ -1225,18 +1213,25 @@ h3 {
 
 .modal-content {
     position: relative;
-    max-width: 90vw;
-    max-height: 90vh;
     background: rgba(0, 0, 0, 0.9);
     border-radius: 15px;
     padding: 20px;
     box-shadow: 0 0 30px var(--wonder-gold);
     border: 2px solid var(--wonder-gold);
     transform: scale(0.9);
-    transition: transform 0.3s ease;
-    width: min(95%, 800px);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    width: 95%; /* Usar porcentagem para melhor responsividade */
+    max-width: 800px; /* Limite máximo */
+    height: auto; /* Altura automática baseada no conteúdo */
     max-height: 90vh;
     overflow-y: auto;
+}
+
+/* Ajustes para modal em telas menores */
+@media (max-width: 600px) {
+    .modal-content {
+        padding: 15px;
+    }
 }
 
 .modal.visible .modal-content {
@@ -1405,13 +1400,12 @@ h3 {
 /* Escudos */
 .shield {
     position: absolute;
+    display: block; /* Garante que a imagem se comporte como bloco */
     cursor: pointer;
-    transition: transform 0.3s ease-in-out, filter 0.3s ease;
-    will-change: transform;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out; /* Transição para surgimento/sumiço */
+    will-change: transform, opacity;
     backface-visibility: hidden;
     transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-    animation: float 3s ease-in-out infinite;
     background: radial-gradient(circle at center, var(--wonder-gold) 0%, #FFA500 100%);
     border-radius: 50%;
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
@@ -1442,37 +1436,12 @@ h3 {
 }
 
 .shield:hover {
-    transform: scale(1.1) rotate(5deg);
+    transform: scale(1.05) rotate(3deg); /* Efeito de hover sutil */
     filter: drop-shadow(0 0 15px var(--wonder-gold));
 }
 
-.shield.collected {
-    animation: collect 0.5s ease-out forwards;
-}
-
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0) rotate(0);
-    }
-    50% {
-        transform: translateY(-10px) rotate(5deg);
-    }
-}
-
-@keyframes collect {
-    0% {
-        transform: scale(1);
-        opacity: 1;
-    }
-    50% {
-        transform: scale(1.2);
-        opacity: 0.8;
-    }
-    100% {
-        transform: scale(0) translateY(-50px);
-        opacity: 0;
-    }
-}
+/* A animação de 'float' foi removida dos escudos, pois eles agora aparecem e somem. */
+/* A animação 'collect' foi integrada na lógica de clique do JS. */
 
 /* Media Queries */
 @media (max-width: 768px) {
@@ -1488,11 +1457,8 @@ h3 {
     #balloonGameFeedback {
         font-size: 1rem;
     }
-
-    .shield {
-        width: 50px !important;
-        height: 50px !important;
-    }
+ /* Os tamanhos dos escudos são definidos dinamicamente no JS, 
+       não precisamos de !important aqui, a menos que haja conflito. */
 }
 
 @media (max-width: 480px) {
@@ -1509,9 +1475,4 @@ h3 {
         font-size: 0.9rem;
     }
 
-    .shield {
-        width: 40px !important;
-        height: 40px !important;
-    }
-}
 }

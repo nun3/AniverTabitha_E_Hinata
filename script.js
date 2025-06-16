@@ -23,23 +23,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Configurações do Jogo ---
     const config = {
         totalEscudos: 5,
-        escudoSize: { min: 60, max: 80 },
-        escudoSpeed: { min: 3000, max: 5000 },
-        maxActiveEscudos: 3,
-        escudoCreationInterval: 2000
+        // escudoSize: { min: 60, max: 80 }, // Removido, tamanhos definidos em createEscudo
+        // escudoSpeed: { min: 3000, max: 5000 }, // Removido, escudos não caem mais
+        // maxActiveEscudos: 3, // Não implementado para limitar escudos ativos
+        escudoCreationInterval: 2500, // Intervalo ligeiramente maior entre escudos: 2.5 segundos
+        shieldLifetime: 8000 // Escudo desaparece após 8 segundos se não for clicado
     };
 
     let escudosColetadosCount = 0;
     let gameActive = false;
-    let escudoCreationInterval = null;
+    let escudoCreationTimer = null; // Renomeado para clareza
     let gameStartTime = 0;
     let gameTimerInterval = null;
     let bestTime = localStorage.getItem('bestTime') || Infinity;
 
-    // Criar elemento de transição mágica
-    const magicTransition = document.createElement('div');
-    magicTransition.className = 'magic-transition';
-    document.body.appendChild(magicTransition);
+    // Elemento de transição mágica (usar o do HTML)
+    const magicTransitionElement = document.getElementById('magicTransition');
 
     // --- Inicialização do Jogo ---
     function initGame() {
@@ -66,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
             startTimer();
             
             // Iniciar criação de escudos
-            escudoCreationInterval = setInterval(createEscudo, config.escudoCreationInterval);
+            escudoCreationTimer = setInterval(createEscudo, config.escudoCreationInterval);
             
             // Esconder botão de iniciar
             startGameBtn.style.display = 'none';
@@ -83,73 +82,73 @@ document.addEventListener('DOMContentLoaded', function() {
     // Função para criar escudo
     function createEscudo() {
         try {
-            if (!gameActive) return;
+            if (!gameActive || !balloonGameSection) return;
             
             const escudo = document.createElement('img');
             escudo.src = 'escudo.png';
             escudo.className = 'shield';
             escudo.alt = 'Escudo da Mulher Maravilha';
             
-            // Ajusta o tamanho baseado na largura da tela
+            // Ajusta o tamanho baseado na largura da tela (escudos maiores)
             const screenWidth = window.innerWidth;
             let shieldSize;
             
             if (screenWidth <= 320) {
-                shieldSize = 45;
+                shieldSize = 65; // Aumentado
             } else if (screenWidth <= 480) {
-                shieldSize = 50;
+                shieldSize = 75; // Aumentado
             } else if (screenWidth <= 768) {
-                shieldSize = 55;
+                shieldSize = 85; // Aumentado
             } else {
-                shieldSize = 60;
+                shieldSize = 95; // Aumentado
             }
             
             escudo.style.width = `${shieldSize}px`;
             escudo.style.height = `${shieldSize}px`;
             
-            // Posição inicial aleatória
-            const startX = Math.random() * (window.innerWidth - shieldSize);
-            escudo.style.left = `${startX}px`;
-            escudo.style.top = '-100px';
+            // Posição aleatória dentro da área do jogo (balloonGameSection)
+            const gameAreaRect = balloonGameSection.getBoundingClientRect();
+            // Ajustar para o fato de que balloonGameSection pode não ser o offsetParent direto
+            // e as coordenadas de gameAreaRect são relativas ao viewport.
+            // Os escudos serão posicionados com 'absolute' dentro de balloonGameSection.
+            const buffer = 10; // Pequena margem para não colar nas bordas
+            const randomX = Math.random() * (balloonGameSection.offsetWidth - shieldSize - 2 * buffer) + buffer;
+            const randomY = Math.random() * (balloonGameSection.offsetHeight - shieldSize - 2 * buffer) + buffer;
+
+            escudo.style.position = 'absolute';
+            escudo.style.left = `${randomX}px`;
+            escudo.style.top = `${randomY}px`;
             
-            // Velocidade e direção
-            const speed = 1 + Math.random() * 1.5;
-            const direction = Math.random() > 0.5 ? 1 : -1;
+            // Estado inicial para a transição de surgimento
+            escudo.style.opacity = '0';
+            escudo.style.transform = 'scale(0.7)';
             
-            document.body.appendChild(escudo);
+            balloonGameSection.appendChild(escudo); // Adicionar à área do jogo
             
-            // Animação do escudo
-            let posY = -100;
-            const animate = () => {
-                if (!gameActive) {
-                    escudo.remove();
-                    return;
+            // Forçar reflow para garantir que a transição ocorra
+            void escudo.offsetHeight; 
+            
+            // Aplicar estado final para a transição
+            escudo.style.opacity = '1';
+            escudo.style.transform = 'scale(1)';
+
+            // Remover escudo após um tempo se não for coletado
+            const lifetimeTimer = setTimeout(() => {
+                if (escudo.parentNode) { // Verifica se ainda está no DOM
+                    escudo.style.opacity = '0';
+                    escudo.style.transform = 'scale(0.7)';
+                    setTimeout(() => escudo.remove(), 300); // Espera a transição de sumiço
                 }
-                
-                posY += speed;
-                const posX = startX + Math.sin(posY * 0.01) * 30 * direction;
-                
-                escudo.style.top = `${posY}px`;
-                escudo.style.left = `${posX}px`;
-                
-                if (posY > window.innerHeight) {
-                    escudo.remove();
-                } else {
-                    requestAnimationFrame(animate);
-                }
-            };
-            
-            requestAnimationFrame(animate);
+            }, config.shieldLifetime);
             
             // Adiciona eventos de interação
             escudo.addEventListener('click', (e) => {
-                handleEscudoClick(e);
+                handleEscudoClick(e, lifetimeTimer); // Passa o timer para limpar
             });
             escudo.addEventListener('touchstart', (e) => {
-                // Previne o comportamento padrão do touch (como scroll ou emulação de clique)
                 e.preventDefault();
-                handleEscudoClick(e);
-            }, { passive: false }); // passive: false é necessário para usar preventDefault()
+                handleEscudoClick(e, lifetimeTimer); // Passa o timer para limpar
+            }, { passive: false });
             
         } catch (error) {
             console.error('Erro ao criar escudo:', error);
@@ -157,25 +156,30 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Função para lidar com o clique no escudo
-    function handleEscudoClick(event) {
+    function handleEscudoClick(event, lifetimeTimer) { // Adicionado lifetimeTimer
         try {
             const escudo = event.target;
-            // Verifica se o jogo está ativo e se o escudo já foi processado
             if (!gameActive || escudo.dataset.clicked === 'true') {
                 return;
             }
-            escudo.dataset.clicked = 'true'; // Marca o escudo como processado
+            escudo.dataset.clicked = 'true'; 
+
+            clearTimeout(lifetimeTimer); // Limpa o timer de vida do escudo
             
-            // Toca o som de coleta
             playAudio('chicote.mp3');
             
-            // Remove o escudo com efeito
-            escudo.style.transform = 'scale(0)';
-            escudo.style.opacity = '0';
-            
+            // Efeito de coleta visual
+            escudo.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
+            escudo.style.transform = 'scale(1.2)'; 
+            escudo.style.opacity = '0.5';
+
             setTimeout(() => {
-                escudo.remove();
-            }, 300);
+                escudo.style.transform = 'scale(0)';
+                escudo.style.opacity = '0';
+                setTimeout(() => {
+                    escudo.remove();
+                }, 150);
+            }, 150);
             
             // Atualiza o contador
             escudosColetadosCount++;
@@ -198,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function showVictory() {
         try {
             gameActive = false;
-            clearInterval(escudoCreationInterval);
+            clearInterval(escudoCreationTimer);
             clearInterval(gameTimerInterval);
             
             // Calcula o tempo final
@@ -221,9 +225,8 @@ document.addEventListener('DOMContentLoaded', function() {
             playAudio('chicote.mp3');
             
             // Ativa a transição mágica
-            const magicTransition = document.getElementById('magicTransition');
-            if (magicTransition) {
-                magicTransition.classList.add('active');
+            if (magicTransitionElement) {
+                magicTransitionElement.classList.add('active');
             }
             
             // Mostra os detalhes da festa após um delay
@@ -251,7 +254,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.shield').forEach(escudo => escudo.remove());
         
         // Limpa os intervalos
-        clearInterval(escudoCreationInterval);
+        clearInterval(escudoCreationTimer);
         clearInterval(gameTimerInterval);
         
         // Reseta o estado
@@ -336,17 +339,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Ajustar posição das estrelas quando a janela for redimensionada
     window.addEventListener('resize', () => {
-        try {
-            const shields = document.querySelectorAll('.shield');
-            shields.forEach(shield => {
-                const x = Math.random() * (window.innerWidth - shield.offsetWidth);
-                const y = Math.random() * (window.innerHeight - shield.offsetHeight);
-                shield.style.left = `${x}px`;
-                shield.style.top = `${y}px`;
-            });
-        } catch (error) {
-            console.error('Erro ao redimensionar escudos:', error);
-        }
+        // A lógica de reposicionamento de escudos no resize foi removida.
+        // Novos escudos serão criados dentro dos limites corretos da área do jogo.
+        // Escudos existentes não serão afetados pelo resize, o que é aceitável
+        // dado o seu tempo de vida.
     });
 
     // Música de fundo
