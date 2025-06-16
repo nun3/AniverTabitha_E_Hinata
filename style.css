@@ -1266,7 +1266,7 @@ h3 {
 #surpresaVideo {
     width: 100%;
     height: auto;
-    max-height: 80vh;
+    max-height: 75vh; /* Reduzido para dar mais espaço em telas menores */
     border-radius: 10px;
     display: block;
 }
