@@ -142,8 +142,14 @@ document.addEventListener('DOMContentLoaded', function() {
             requestAnimationFrame(animate);
             
             // Adiciona eventos de interação
-            escudo.addEventListener('click', handleEscudoClick);
-            escudo.addEventListener('touchstart', handleEscudoClick, { passive: true });
+            escudo.addEventListener('click', (e) => {
+                handleEscudoClick(e);
+            });
+            escudo.addEventListener('touchstart', (e) => {
+                // Previne o comportamento padrão do touch (como scroll ou emulação de clique)
+                e.preventDefault();
+                handleEscudoClick(e);
+            }, { passive: false }); // passive: false é necessário para usar preventDefault()
             
         } catch (error) {
             console.error('Erro ao criar escudo:', error);
@@ -153,9 +159,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Função para lidar com o clique no escudo
     function handleEscudoClick(event) {
         try {
-            if (!gameActive) return;
-            
             const escudo = event.target;
+            // Verifica se o jogo está ativo e se o escudo já foi processado
+            if (!gameActive || escudo.dataset.clicked === 'true') {
+                return;
+            }
+            escudo.dataset.clicked = 'true'; // Marca o escudo como processado
             
             // Toca o som de coleta
             playAudio('chicote.mp3');
@@ -317,7 +326,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Iniciar o jogo ---
     if (balloonGameSection) {
         console.log('Seção do jogo encontrada, iniciando...');
-        initGame();
+        // initGame(); // Comente ou remova esta linha para o jogo iniciar apenas pelo botão
     } else {
         console.error('Seção do jogo não encontrada!');
     }
