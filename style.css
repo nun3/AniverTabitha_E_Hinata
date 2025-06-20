@@ -231,7 +231,7 @@ body::before {
 /* Imagem Central do Convite */
 .imagem-container {
     width: 100%;
-    max-width: 400px;
+    max-width: 300px;
     margin: 1rem auto;
     position: relative;
     display: flex;
@@ -347,7 +347,7 @@ body::before {
 /* Media Queries - Tablet */
 @media (min-width: 768px) {
     .imagem-container {
-        max-width: 500px;
+        max-width: 350px;
         margin: 1.5rem auto;
     }
 
@@ -375,7 +375,7 @@ body::before {
 /* Media Queries - Desktop */
 @media (min-width: 1024px) {
     .imagem-container {
-        max-width: 600px;
+        max-width: 400px;
         margin: 2rem auto;
     }
 
@@ -402,7 +402,7 @@ body::before {
 /* Ajustes para orientação paisagem em dispositivos móveis */
 @media (max-height: 600px) and (orientation: landscape) {
     .imagem-container {
-        max-width: 40%;
+        max-width: 30%;
         margin: 0.5rem auto;
     }
 
@@ -738,7 +738,7 @@ h3 {
     .convite-imagem-principal {
         width: 100%;
         height: auto;
-        max-height: 300px;
+        max-height: 250px;
         object-fit: contain;
     }
     
@@ -780,7 +780,7 @@ h3 {
     }
     
     .convite-imagem-principal {
-        max-height: 250px;
+        max-height: 200px;
     }
     
     #detalhesFesta {
@@ -812,7 +812,7 @@ h3 {
     }
     
     .convite-imagem-principal {
-        max-height: 200px;
+        max-height: 150px;
     }
     
     #detalhesFesta {
@@ -844,7 +844,7 @@ h3 {
     }
     
     .convite-imagem-principal {
-        max-height: 500px;
+        max-height: 350px;
     }
 }
 
@@ -856,7 +856,7 @@ h3 {
     }
     
     .convite-imagem-principal {
-        max-height: 200px;
+        max-height: 150px;
     }
     
     #detalhesFesta {
