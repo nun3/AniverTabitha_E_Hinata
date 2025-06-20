@@ -16,14 +16,14 @@ const timeProgressEl = document.getElementById('timeProgress');
 
 // --- Configurações do Jogo ---
 const config = {
-    gameDuration: 30, // segundos
+    gameDuration: 45, // segundos - mais tempo para ser mais delicado
     shieldPoints: 100,
     maxCombo: 5,
-    comboTimeout: 2000, // milissegundos
-    powerUpChance: 0.1, // 10% de chance de spawnar power-up
-    powerUpDuration: 5000, // 5 segundos
-    shieldSpeed: { min: 2, max: 4 },
-    shieldSpawnInterval: 1000 // 1 segundo
+    comboTimeout: 3000, // milissegundos - mais tempo para combo
+    powerUpChance: 0.08, // 8% de chance de spawnar power-up - menos frequente
+    powerUpDuration: 6000, // 6 segundos - mais duração
+    shieldSpeed: { min: 1.5, max: 3 }, // velocidades mais suaves
+    shieldSpawnInterval: 1200 // 1.2 segundos - spawn mais lento
 };
 
 // --- Estado do Jogo ---
@@ -93,18 +93,18 @@ function createEscudo() {
         escudo.className = 'shield';
         escudo.alt = 'Escudo da Mulher Maravilha';
         
-        // Ajusta o tamanho baseado na largura da tela
+        // Ajusta o tamanho baseado na largura da tela - tamanhos mais delicados
         const screenWidth = window.innerWidth;
         let shieldSize;
         
         if (screenWidth <= 320) {
-            shieldSize = 45;
+            shieldSize = 40;
         } else if (screenWidth <= 480) {
-            shieldSize = 50;
+            shieldSize = 45;
         } else if (screenWidth <= 768) {
-            shieldSize = 55;
+            shieldSize = 50;
         } else {
-            shieldSize = 60;
+            shieldSize = 55;
         }
         
         escudo.style.width = `${shieldSize}px`;
@@ -115,16 +115,16 @@ function createEscudo() {
         escudo.style.left = `${startX}px`;
         escudo.style.top = '-100px';
         
-        // Velocidade baseada no power-up de câmera lenta
+        // Velocidade baseada no power-up de câmera lenta - mais suave
         const baseSpeed = gameState.powerUps.slowMotion ? 
-            config.shieldSpeed.min * 0.5 : 
+            config.shieldSpeed.min * 0.6 : 
             config.shieldSpeed.min + Math.random() * (config.shieldSpeed.max - config.shieldSpeed.min);
         
         const direction = Math.random() > 0.5 ? 1 : -1;
         
         document.body.appendChild(escudo);
         
-        // Animação do escudo
+        // Animação do escudo - mais suave e elegante
         let posY = -100;
         const animate = () => {
             if (!gameState.isPlaying) {
@@ -133,7 +133,8 @@ function createEscudo() {
             }
             
             posY += baseSpeed;
-            const posX = startX + Math.sin(posY * 0.01) * 30 * direction;
+            // Movimento mais suave e sinuoso
+            const posX = startX + Math.sin(posY * 0.008) * 25 * direction;
             
             escudo.style.top = `${posY}px`;
             escudo.style.left = `${posX}px`;
@@ -171,9 +172,9 @@ function createPowerUp() {
     
     document.body.appendChild(powerUp);
     
-    // Animação do power-up
+    // Animação do power-up - mais suave
     let posY = -50;
-    const speed = 2;
+    const speed = 1.5; // velocidade mais lenta
     const direction = Math.random() > 0.5 ? 1 : -1;
     
     const animate = () => {
@@ -183,7 +184,7 @@ function createPowerUp() {
         }
         
         posY += speed;
-        const posX = startX + Math.sin(posY * 0.01) * 20 * direction;
+        const posX = startX + Math.sin(posY * 0.008) * 15 * direction;
         
         powerUp.style.top = `${posY}px`;
         powerUp.style.left = `${posX}px`;
