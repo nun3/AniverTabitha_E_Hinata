@@ -1337,13 +1337,18 @@ h3 {
     max-width: 800px; /* Limite máximo */
     height: auto; /* Altura automática baseada no conteúdo */
     max-height: 90vh;
-    overflow-y: auto;
+    overflow: hidden; /* Alterado para hidden para evitar barras de rolagem */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Ajustes para modal em telas menores */
 @media (max-width: 600px) {
     .modal-content {
         padding: 15px;
+        box-shadow: 0 0 15px var(--wonder-gold);
     }
 }
 
@@ -1378,8 +1383,10 @@ h3 {
 
 #surpresaVideo {
     width: 100%;
+    max-width: 100%; /* Garante que não ultrapasse o container */
     height: auto;
-    max-height: 75vh; /* Reduzido para dar mais espaço em telas menores */
+    max-height: 100%; /* Ocupa a altura disponível do modal-content */
+    object-fit: contain; /* Garante que o vídeo não seja cortado */
     border-radius: 10px;
     display: block;
 }
