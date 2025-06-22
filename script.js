@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const gameScore = document.getElementById('gameScore');
     const finalTime = document.getElementById('finalTime');
     const orientationModal = document.getElementById('orientationModal');
+    const closeOrientationBtn = document.getElementById('closeOrientation');
 
     // Garantir que detalhesFesta esteja oculta no carregamento
     if (detalhesFesta) {
@@ -621,4 +622,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Inicialização
     balloonGameFeedbackEl.textContent = 'Clique em "Iniciar Jogo" para começar! ✨';
+
+    // Botão de fechar do modal de orientação
+    if (closeOrientationBtn) {
+        closeOrientationBtn.addEventListener('click', () => {
+            orientationModal.classList.remove('visible');
+        });
+    }
 });

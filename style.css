@@ -1794,3 +1794,138 @@ h3 {
     border: none !important;
     transition: all 0.5s ease;
 }
+
+/* Modal de Orientação Responsivo */
+#orientationModal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(10, 10, 40, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+    transition: opacity 0.3s;
+    opacity: 0;
+    pointer-events: none;
+}
+#orientationModal.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+.orientation-modal-content {
+    background: linear-gradient(135deg, rgb(46 38 178), rgba(0, 0, 0, 0.7));
+    border: 3px solid var(--wonder-gold);
+    border-radius: 20px;
+    box-shadow: 0 0 30px var(--wonder-gold);
+    padding: 2rem 1.5rem 1.5rem 1.5rem;
+    text-align: center;
+    color: var(--wonder-white);
+    max-width: 90vw;
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.orientation-modal-content h2 {
+    color: var(--wonder-gold);
+    font-size: 1.5rem;
+    margin: 1rem 0 0.5rem 0;
+    font-family: var(--font-titulos);
+}
+.orientation-modal-content p {
+    font-size: 1rem;
+    line-height: 1.4;
+    opacity: 0.95;
+    margin-bottom: 1.2rem;
+}
+.orientation-modal-content .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--wonder-gold);
+    color: #000;
+    border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    z-index: 10;
+}
+.orientation-modal-content .close-button:hover {
+    background: #fffbe6;
+}
+.rotate-icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 0.5rem;
+    stroke: var(--wonder-gold);
+    animation: gentle-rotate 4s linear infinite;
+}
+@keyframes gentle-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Vídeo responsivo e centralizado */
+#videoModal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(10, 10, 40, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+    transition: opacity 0.3s;
+    opacity: 0;
+    pointer-events: none;
+}
+#videoModal.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+.modal-content {
+    background: linear-gradient(135deg, rgb(46 38 178), rgba(0, 0, 0, 0.7));
+    border: 3px solid var(--wonder-gold);
+    border-radius: 20px;
+    box-shadow: 0 0 30px var(--wonder-gold);
+    padding: 1.5rem;
+    text-align: center;
+    max-width: 95vw;
+    max-height: 95vh;
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#surpresaVideo {
+    width: 100%;
+    height: 100%;
+    max-width: 90vw;
+    max-height: 70vh;
+    object-fit: contain;
+    border-radius: 12px;
+    background: #000;
+    display: block;
+}
+@media (max-width: 600px) {
+    .modal-content, .orientation-modal-content {
+        padding: 1rem 0.5rem 1rem 0.5rem;
+        max-width: 98vw;
+    }
+    #surpresaVideo {
+        max-width: 98vw;
+        max-height: 50vh;
+    }
+}
