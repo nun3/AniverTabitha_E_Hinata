@@ -33,6 +33,9 @@ body {
     overflow-x: hidden;
     min-height: 100vh;
     padding: 0.5rem;
+    display: grid;
+    justify-items: center;
+    align-items: start;
 }
 
 /* Estrelas */
@@ -1384,8 +1387,8 @@ h3 {
 #surpresaVideo {
     width: 100%;
     max-width: 100%; /* Garante que não ultrapasse o container */
-    height: 100%; /* Força o vídeo a ocupar a altura do contêiner */
-    max-height: 100%; /* Ocupa a altura disponível do modal-content */
+    height: auto; /* Permite que a altura seja automática baseada na largura */
+    max-height: 85vh; /* Limita a altura máxima a 85% da tela */
     object-fit: contain; /* Garante que o vídeo não seja cortado */
     border-radius: 10px;
     display: block;
