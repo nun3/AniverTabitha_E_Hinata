@@ -426,6 +426,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (videoModal && video) {
             video.pause();
             videoModal.classList.remove('visible');
+            document.body.classList.remove('modal-open');
             
             // Tocar o som de transição
             if (transitionSound && !transitionSound.paused) {
@@ -447,6 +448,7 @@ document.addEventListener('DOMContentLoaded', function() {
             openVideoPlayer();
         } else {
             orientationModal.classList.add('visible');
+            document.body.classList.add('modal-open');
         }
     }
 
@@ -458,6 +460,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (videoModal && video) {
             videoModal.classList.add('visible');
+            document.body.classList.add('modal-open');
             video.currentTime = 0;
             video.play().catch(error => {
                 console.error('Erro ao reproduzir o vídeo:', error);
@@ -479,6 +482,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!e.matches && videoModal && videoModal.classList.contains('visible')) {
             closeVideo();
             orientationModal.classList.add('visible');
+            document.body.classList.add('modal-open');
         }
     }
     

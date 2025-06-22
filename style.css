@@ -1794,3 +1794,8 @@ h3 {
     border: none !important;
     transition: all 0.5s ease;
 }
+
+/* Classe para travar o scroll do body quando um modal estiver aberto */
+body.modal-open {
+    overflow: hidden;
+}
