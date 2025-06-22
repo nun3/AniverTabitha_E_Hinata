@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const gameTimer = document.getElementById('gameTimer');
     const gameScore = document.getElementById('gameScore');
     const finalTime = document.getElementById('finalTime');
+    const orientationModal = document.getElementById('orientationModal');
 
     // Garantir que detalhesFesta esteja oculta no carregamento
     if (detalhesFesta) {
@@ -248,13 +249,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Mostra os detalhes da festa após um delay
             setTimeout(() => {
                 detalhesFesta.classList.remove('hidden');
-                // Alterado para manter o espaço do layout
-                balloonGameSection.style.opacity = '0';
-                balloonGameSection.style.pointerEvents = 'none';
-                balloonGameSection.style.height = '0';
-                balloonGameSection.style.overflow = 'hidden';
-                balloonGameSection.style.margin = '0';
-                balloonGameSection.style.padding = '0';
+                // Alterado para usar a classe que mantém o espaço do layout
+                balloonGameSection.classList.add('hidden-layout');
             }, 2000);
             
         } catch (error) {
@@ -426,28 +422,67 @@ document.addEventListener('DOMContentLoaded', function() {
     function closeVideo() {
         const videoModal = document.getElementById('videoModal');
         const video = document.getElementById('surpresaVideo');
-        const areaPresente = document.getElementById('areaPresente');
         
-        if (videoModal && video && areaPresente) {
-            // Parar o vídeo
+        if (videoModal && video) {
             video.pause();
+            videoModal.classList.remove('visible');
             
             // Tocar o som de transição
-            if (!transitionSound.paused) {
+            if (transitionSound && !transitionSound.paused) {
                 transitionSound.pause();
                 transitionSound.currentTime = 0;
             }
-            transitionSound.play().catch(error => console.log('Erro ao tocar som de transição:', error));
-
-            // Esconder o modal com efeito
-            videoModal.classList.remove('visible');
-            
-            // Mostrar a área do presente novamente após a transição
-            setTimeout(() => {
-                areaPresente.classList.remove('hidden');
-            }, 300);
+            if(transitionSound) {
+                transitionSound.play().catch(error => console.log('Erro ao tocar som de transição:', error));
+            }
         }
     }
+
+    // --- Nova Lógica de Vídeo com Checagem de Orientação ---
+
+    function handleVideoRequest() {
+        const isLandscape = window.matchMedia("(orientation: landscape)").matches;
+        
+        if (isLandscape) {
+            openVideoPlayer();
+        } else {
+            orientationModal.classList.add('visible');
+        }
+    }
+
+    function openVideoPlayer() {
+        if (orientationModal) orientationModal.classList.remove('visible');
+        
+        const videoModal = document.getElementById('videoModal');
+        const video = document.getElementById('surpresaVideo');
+
+        if (videoModal && video) {
+            videoModal.classList.add('visible');
+            video.currentTime = 0;
+            video.play().catch(error => {
+                console.error('Erro ao reproduzir o vídeo:', error);
+            });
+        }
+    }
+    
+    // Listener para mudança de orientação
+    const landscapeMatcher = window.matchMedia("(orientation: landscape)");
+    
+    function orientationChangeListener(e) {
+        // Se a tela virou para paisagem e o modal de aviso está visível
+        if (e.matches && orientationModal && orientationModal.classList.contains('visible')) {
+            openVideoPlayer();
+        }
+        
+        // Opcional: se virar de volta para retrato com o vídeo aberto, fecha o vídeo e mostra o aviso
+        const videoModal = document.getElementById('videoModal');
+        if (!e.matches && videoModal && videoModal.classList.contains('visible')) {
+            closeVideo();
+            orientationModal.classList.add('visible');
+        }
+    }
+    
+    landscapeMatcher.addEventListener('change', orientationChangeListener);
 
     // Criar partículas mágicas
     function createMagicParticles(x, y, count = 20) {
@@ -551,13 +586,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Adicionar evento de clique ao símbolo
     if (imagemDoPresente) {
-        imagemDoPresente.addEventListener('click', showVideo);
+        imagemDoPresente.addEventListener('click', handleVideoRequest);
     }
 
     // Adicionar evento de clique ao botão de fechar
     const closeButton = document.getElementById('closeModal');
     if (closeButton) {
         closeButton.addEventListener('click', closeVideo);
+    }
+
+    // Adicionar evento para quando o vídeo terminar
+    const video = document.getElementById('surpresaVideo');
+    if(video) {
+        video.addEventListener('ended', closeVideo);
     }
 
     // Função para tocar um áudio
@@ -575,12 +616,7 @@ document.addEventListener('DOMContentLoaded', function() {
         balloonGameFeedbackEl.textContent = 'Clique em "Iniciar Jogo" para começar! ✨';
         
         // Restaurar a visibilidade da seção do jogo
-        balloonGameSection.style.opacity = '1';
-        balloonGameSection.style.pointerEvents = 'auto';
-        balloonGameSection.style.height = 'auto';
-        balloonGameSection.style.overflow = 'visible';
-        balloonGameSection.style.margin = '1rem 0';
-        balloonGameSection.style.padding = '1.5rem';
+        balloonGameSection.classList.remove('hidden-layout');
     });
 
     // Inicialização

@@ -1740,3 +1740,57 @@ h3 {
         width: 0 !important;
     }
 }
+
+/* Modal de Orientação */
+.orientation-modal-content {
+    background: rgba(0, 0, 0, 0.9);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    color: var(--wonder-white);
+    max-width: 300px;
+    border: 2px solid var(--wonder-gold);
+    box-shadow: 0 0 30px var(--wonder-gold);
+}
+
+.orientation-modal-content h2 {
+    color: var(--wonder-gold);
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.orientation-modal-content p {
+    font-size: 1rem;
+    line-height: 1.4;
+    opacity: 0.9;
+}
+
+.rotate-icon {
+    width: 64px;
+    height: 64px;
+    stroke: var(--wonder-gold);
+    animation: gentle-rotate 4s linear infinite;
+}
+
+@keyframes gentle-rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Classe para esconder elementos mantendo a estabilidade do layout */
+.hidden-layout {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    transition: all 0.5s ease;
+}
