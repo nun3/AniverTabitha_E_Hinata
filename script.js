@@ -20,6 +20,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const gameScore = document.getElementById('gameScore');
     const finalTime = document.getElementById('finalTime');
 
+    // Garantir que detalhesFesta esteja oculta no carregamento
+    if (detalhesFesta) {
+        detalhesFesta.classList.add('hidden');
+        console.log('detalhesFesta ocultada no carregamento');
+    } else {
+        console.error('detalhesFesta não encontrada');
+    }
+
+    // Garantir que gameScore esteja oculta no carregamento
+    if (gameScore) {
+        gameScore.classList.add('hidden');
+        console.log('gameScore ocultada no carregamento');
+    } else {
+        console.error('gameScore não encontrada');
+    }
+
     // --- Configurações do Jogo ---
     const config = {
         totalEscudos: 5,

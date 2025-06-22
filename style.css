@@ -1045,6 +1045,33 @@ h3 {
     display: none;
 }
 
+/* Regras específicas para #detalhesFesta oculta */
+#detalhesFesta.hidden {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Regras específicas para dispositivos móveis */
+@media (max-width: 768px) {
+    #detalhesFesta.hidden {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        height: 0 !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        position: absolute !important;
+        left: -9999px !important;
+        top: -9999px !important;
+    }
+}
+
 .secao-conteudo {
     margin-top: 30px;
 }
@@ -1263,11 +1290,13 @@ h3 {
 }
 
 @keyframes particle-glow {
-    from {
-        box-shadow: none;
+    0% {
+        opacity: 1;
+        transform: scale(1);
     }
-    to {
-        box-shadow: none;
+    100% {
+        opacity: 0;
+        transform: scale(0);
     }
 }
 
@@ -1653,5 +1682,49 @@ h3 {
     100% {
         opacity: 0;
         transform: scale(0);
+    }
+}
+
+/* Regras específicas para garantir que #detalhesFesta fique oculta */
+#detalhesFesta.hidden {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Regras específicas para dispositivos móveis */
+@media (max-width: 768px) {
+    #detalhesFesta.hidden {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        height: 0 !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        position: absolute !important;
+        left: -9999px !important;
+        top: -9999px !important;
+    }
+}
+
+/* Regras específicas para iPhone e dispositivos com tela pequena */
+@media (max-width: 480px) {
+    #detalhesFesta.hidden {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        height: 0 !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        position: absolute !important;
+        left: -9999px !important;
+        top: -9999px !important;
+        width: 0 !important;
     }
 }
