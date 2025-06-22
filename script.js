@@ -248,7 +248,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // Mostra os detalhes da festa após um delay
             setTimeout(() => {
                 detalhesFesta.classList.remove('hidden');
-                balloonGameSection.style.display = 'none';
+                // Alterado para manter o espaço do layout
+                balloonGameSection.style.opacity = '0';
+                balloonGameSection.style.pointerEvents = 'none';
+                balloonGameSection.style.height = '0';
+                balloonGameSection.style.overflow = 'hidden';
+                balloonGameSection.style.margin = '0';
+                balloonGameSection.style.padding = '0';
             }, 2000);
             
         } catch (error) {
@@ -567,6 +573,14 @@ document.addEventListener('DOMContentLoaded', function() {
         gameScore.classList.add('hidden');
         startGameBtn.style.display = 'block';
         balloonGameFeedbackEl.textContent = 'Clique em "Iniciar Jogo" para começar! ✨';
+        
+        // Restaurar a visibilidade da seção do jogo
+        balloonGameSection.style.opacity = '1';
+        balloonGameSection.style.pointerEvents = 'auto';
+        balloonGameSection.style.height = 'auto';
+        balloonGameSection.style.overflow = 'visible';
+        balloonGameSection.style.margin = '1rem 0';
+        balloonGameSection.style.padding = '1.5rem';
     });
 
     // Inicialização
