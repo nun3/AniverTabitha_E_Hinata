@@ -975,7 +975,7 @@ h3 {
     }
     
     .container {
-        background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.8));
+        background: linear-gradient(135deg, rgba(172, 48, 10, 0.849),rgba(2, 43, 223, 0.788),rgba(244, 248, 3, 0.932) );
     }
     
     #detalhesFesta, .evento-info, #areaPresente {
