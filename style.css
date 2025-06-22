@@ -979,7 +979,7 @@ h3 {
     }
     
     #detalhesFesta, .evento-info, #areaPresente {
-        background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.7));
+        background: linear-gradient(135deg, rgb(46 38 178), rgba(0, 0, 0, 0.7));
     }
 }
 
@@ -1261,7 +1261,7 @@ h3 {
 #confirmarPresenca {
     width: 100%;
     max-width: 500px;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.4) 100%);
+    background: linear-gradient(135deg, rgba(17, 14, 196, 0.6) 0%, rgba(0, 0, 0, 0.281) 100%);
     padding: 1.5rem;
     border-radius: 12px;
     margin: 1rem auto;
